@@ -1,4 +1,7 @@
 export const ROUTES = {
+  // Auth
+  LOGIN: "/login",
+
   // Features
   PETICIONES: "/peticiones",
   PERSONAL: "/personal",
