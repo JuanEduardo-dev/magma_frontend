@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Input } from "@heroui/react";
-import { Search, Bell, Sun, Moon, User } from "lucide-react";
+import { Search, Bell, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/shared/contexts/ThemeContext";
+import { UserDropdown } from "./UserDropdown";
+import { ChangeCompanyModal } from "./ChangeCompanyModal";
 
 interface TopBarProps {
   title: string;
@@ -16,6 +19,7 @@ export function TopBar({
   userRole = "Software Engineer",
 }: TopBarProps) {
   const { theme, toggleTheme } = useTheme();
+  const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
 
   return (
     <div className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 px-6 py-4">
@@ -69,19 +73,19 @@ export function TopBar({
           </button>
 
           {/* User Avatar */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white overflow-hidden">
-              <User className="w-6 h-6" />
-            </div>
-            <div className="flex flex-col">
-              <p className="text-sm font-medium leading-tight text-zinc-900 dark:text-zinc-100">
-                {userName}
-              </p>
-              <p className="text-[#797979] text-xs leading-tight">{userRole}</p>
-            </div>
-          </div>
+          <UserDropdown
+            userName={userName}
+            userRole={userRole}
+            onChangeCompany={() => setIsCompanyModalOpen(true)}
+          />
         </div>
       </div>
+
+      {/* Change Company Modal */}
+      <ChangeCompanyModal
+        isOpen={isCompanyModalOpen}
+        onClose={() => setIsCompanyModalOpen(false)}
+      />
     </div>
   );
 }
