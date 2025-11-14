@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "Juan Pérez",
+    "email": "juan.perez@salamagma.com",
+    "avatar": "https://i.pravatar.cc/150?img=1",
+    "workplace": "Sala magma S.L.",
+    "role": "Administrador",
+    "system": "Sí"
+  },
+  {
+    "id": "2",
+    "name": "María García",
+    "email": "maria.garcia@salamagma.com",
+    "avatar": "https://i.pravatar.cc/150?img=5",
+    "workplace": "Raco explanada S.L.",
+    "role": "Gerente",
+    "system": "No"
+  },
+  {
+    "id": "3",
+    "name": "Carlos Rodríguez",
+    "email": "carlos.rodriguez@salamagma.com",
+    "avatar": "https://i.pravatar.cc/150?img=12",
+    "workplace": "Tambora open AIR S.L.",
+    "role": "Empleado",
+    "system": "No"
+  },
+  {
+    "id": "4",
+    "name": "Ana Martínez",
+    "email": "ana.martinez@salamagma.com",
+    "avatar": "https://i.pravatar.cc/150?img=9",
+    "workplace": "Imc alicante S.L.",
+    "role": "Supervisor",
+    "system": "Sí"
+  },
+  {
+    "id": "5",
+    "name": "Luis Sánchez",
+    "email": "luis.sanchez@salamagma.com",
+    "avatar": "https://i.pravatar.cc/150?img=15",
+    "workplace": "TAKA parques temáticos, S.L.",
+    "role": "Empleado",
+    "system": "No"
+  },
+  {
+    "id": "6",
+    "name": "Laura Torres",
+    "email": "laura.torres@salamagma.com",
+    "avatar": "https://i.pravatar.cc/150?img=10",
+    "workplace": "Sala magma S.L.",
+    "role": "Gerente",
+    "system": "Sí"
+  }
+]

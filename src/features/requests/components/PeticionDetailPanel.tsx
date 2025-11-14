@@ -43,14 +43,14 @@ export function PeticionDetailPanel({
       {/* Overlay */}
       <button
         type="button"
-        className="fixed inset-0 bg-black/30 z-40 transition-opacity cursor-default"
+        className="fixed inset-0 h-screen w-screen bg-black/30 z-40 transition-opacity cursor-default"
         onClick={onClose}
         onKeyDown={(e) => e.key === "Escape" && onClose()}
         aria-label="Cerrar panel"
       />
 
       {/* Panel */}
-      <div className="fixed right-0 top-0 bottom-0 w-full max-w-[500px] bg-white shadow-lg z-50 overflow-y-auto">
+      <div className="fixed right-0 top-0 bottom-0 h-screen w-full max-w-[500px] bg-white shadow-lg z-50 overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-zinc-900">

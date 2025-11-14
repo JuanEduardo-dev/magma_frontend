@@ -31,12 +31,12 @@ export function EmpleadoDetailPanel({
     <>
       <button
         type="button"
-        className="fixed inset-0 bg-black/30 z-40 cursor-default"
+        className="fixed inset-0 h-screen w-screen bg-black/30 z-40 cursor-default"
         onClick={onClose}
         aria-label="Cerrar panel"
       />
 
-      <div className="fixed right-0 top-0 bottom-0 w-full max-w-[500px] bg-white shadow-lg z-50 overflow-y-auto">
+      <div className="fixed right-0 top-0 bottom-0 h-screen w-full max-w-[500px] bg-white shadow-lg z-50 overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Perfil del Empleado</h3>
           <Button isIconOnly variant="light" onPress={onClose}>

@@ -5,3 +5,5 @@ export interface ConfigurationOption {
   icon: string | { src: string; height: number; width: number };
   href: string;
 }
+
+export * from "./users";
