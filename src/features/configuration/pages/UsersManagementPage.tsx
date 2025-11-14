@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import {
   Card,
   CardBody,
@@ -26,7 +25,6 @@ import usersData from "../data/users.json";
 import type { User } from "../types/users";
 
 export default function UsersManagementPage() {
-  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [isNewUserPanelOpen, setIsNewUserPanelOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -77,9 +75,7 @@ export default function UsersManagementPage() {
     <div className="space-y-6">
       {/* Breadcrumb */}
       <Breadcrumbs>
-        <BreadcrumbItem onPress={() => router.push("/configuration")}>
-          Configuración
-        </BreadcrumbItem>
+        <BreadcrumbItem href="/configuration">Configuración</BreadcrumbItem>
         <BreadcrumbItem>Gestión de usuarios</BreadcrumbItem>
       </Breadcrumbs>
 

@@ -2,21 +2,17 @@
 
 import { useState } from "react";
 import { Card, CardBody, Breadcrumbs, BreadcrumbItem } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import { GeneralConfigurationTab } from "../components/GeneralConfigurationTab";
 import { PasswordTab } from "../components/PasswordTab";
 
 export default function AccountManagementPage() {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"general" | "password">("general");
 
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
       <Breadcrumbs>
-        <BreadcrumbItem onPress={() => router.push("/configuration")}>
-          Configuración
-        </BreadcrumbItem>
+        <BreadcrumbItem href="/configuration">Configuración</BreadcrumbItem>
         <BreadcrumbItem>Gestión de cuenta</BreadcrumbItem>
       </Breadcrumbs>
 
