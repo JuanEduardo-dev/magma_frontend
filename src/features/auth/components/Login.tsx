@@ -16,7 +16,7 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Simple redirect to dashboard - no authentication logic
-    router.push(ROUTES.PETICIONES);
+    router.push(ROUTES.REQUESTS);
   };
 
   return (

@@ -3,11 +3,15 @@ export const ROUTES = {
   LOGIN: "/login",
 
   // Features
-  PETICIONES: "/peticiones",
-  PERSONAL: "/personal",
-  DEPARTAMENTOS: "/departamentos",
-  FORMULARIOS: "/formularios",
-  HORARIOS: "/horarios",
+  REQUESTS: "/requests",
+  STAFF: "/staff",
+  DEPARTMENTS: "/departments",
+  FORMS: "/forms",
+  SCHEDULES: "/schedules",
+  CONFIGURATION: "/configuration",
+  CONFIGURATION_ACCOUNT: "/configuration/account",
+  CONFIGURATION_USERS: "/configuration/users",
+  CONFIGURATION_ROLES: "/configuration/roles",
 
   // Main
   HOME: "/",

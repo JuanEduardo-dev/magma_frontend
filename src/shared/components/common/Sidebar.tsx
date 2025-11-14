@@ -69,18 +69,18 @@ export function Sidebar({ className = "" }: SidebarProps) {
           icon: Users,
           children: [
             {
-              id: "departamentos",
+              id: "departments",
               label: "Departamentos",
-              href: ROUTES.DEPARTAMENTOS,
+              href: ROUTES.DEPARTMENTS,
             },
             {
-              id: "formularios",
+              id: "forms",
               label: "Formularios",
-              href: ROUTES.FORMULARIOS,
+              href: ROUTES.FORMS,
             },
-            { id: "personal", label: "Personal", href: ROUTES.PERSONAL },
-            { id: "horarios", label: "Horarios", href: ROUTES.HORARIOS },
-            { id: "peticiones", label: "Peticiones", href: ROUTES.PETICIONES },
+            { id: "staff", label: "Personal", href: ROUTES.STAFF },
+            { id: "schedules", label: "Horarios", href: ROUTES.SCHEDULES },
+            { id: "requests", label: "Peticiones", href: ROUTES.REQUESTS },
           ],
         },
         {
@@ -109,7 +109,12 @@ export function Sidebar({ className = "" }: SidebarProps) {
           icon: Shield,
           href: "#",
         },
-        { id: "configuracion", label: "Configuración", icon: Cog, href: "#" },
+        {
+          id: "configuration",
+          label: "Configuración",
+          icon: Cog,
+          href: ROUTES.CONFIGURATION,
+        },
       ],
     },
   ];
@@ -190,8 +195,8 @@ export function Sidebar({ className = "" }: SidebarProps) {
 
       {/* Navigation Menu */}
       <div className="flex-1 overflow-y-auto">
-        {menuStructure.map((section, idx) => (
-          <div key={idx} className="py-4">
+        {menuStructure.map((section) => (
+          <div key={section.category} className="py-4">
             <div className="px-6 mb-2">
               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium uppercase">
                 {section.category}
