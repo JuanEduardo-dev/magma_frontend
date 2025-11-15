@@ -9,7 +9,7 @@ export default async function DepartmentDetail({ params }: PageProps) {
   const { id } = await params;
 
   return (
-    <MainLayout>
+    <MainLayout title="Departamentos">
       <DepartmentDetailPage departmentId={id} />
     </MainLayout>
   );
