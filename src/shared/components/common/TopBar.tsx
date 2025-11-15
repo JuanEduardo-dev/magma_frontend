@@ -8,13 +8,13 @@ import { UserDropdown } from "./UserDropdown";
 import { ChangeCompanyModal } from "./ChangeCompanyModal";
 
 interface TopBarProps {
-  title: string;
+  title?: string;
   userName?: string;
   userRole?: string;
 }
 
 export function TopBar({
-  title,
+  title = "",
   userName = "Junior García",
   userRole = "Software Engineer",
 }: TopBarProps) {

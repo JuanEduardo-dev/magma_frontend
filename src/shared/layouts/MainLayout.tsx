@@ -6,7 +6,7 @@ import { TopBar } from "../components/common/TopBar";
 
 interface MainLayoutProps {
   children: ReactNode;
-  title: string;
+  title?: string;
   userName?: string;
   userRole?: string;
 }

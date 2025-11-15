@@ -8,22 +8,20 @@ import {
   ModalFooter,
   Button,
 } from "@heroui/react";
-import { AlertTriangle } from "lucide-react";
 
-interface DeleteRoleModalProps {
+interface DeleteMemberModalProps {
   isOpen: boolean;
   onClose: () => void;
-  roleName: string;
+  memberName: string;
 }
 
-export function DeleteRoleModal({
+export function DeleteMemberModal({
   isOpen,
   onClose,
-  roleName,
-}: DeleteRoleModalProps) {
+  memberName,
+}: DeleteMemberModalProps) {
   const handleDelete = () => {
-    // Aquí iría la lógica de eliminación
-    console.log("Eliminando cargo:", roleName);
+    console.log("Eliminando miembro:", memberName);
     onClose();
   };
 
@@ -31,17 +29,14 @@ export function DeleteRoleModal({
     <Modal isOpen={isOpen} onClose={onClose} placement="center">
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1 items-center pt-6">
-          <div className="flex items-center justify-center w-12 h-12 rounded-full mb-4">
-            <AlertTriangle className="w-12 h-12 text-red-600 dark:text-red-500" />
-          </div>
           <h3 className="text-xl font-semibold text-center">
-            ¿Estás seguro/a que deseas eliminar este cargo?
+            ¿Estás seguro/a que deseas eliminar a este integrante del
+            departamento?
           </h3>
         </ModalHeader>
         <ModalBody className="text-center">
           <p className="text-gray-500 dark:text-gray-400">
-            Los usuarios asignados a este cargo quedarán sin un cargo asociado y
-            podrían perder ciertos permisos.
+            Dejará de estar asociado al departamento.
           </p>
         </ModalBody>
         <ModalFooter className="justify-center pb-6">
@@ -49,7 +44,7 @@ export function DeleteRoleModal({
             Cancelar
           </Button>
           <Button color="danger" onPress={handleDelete}>
-            Eliminar cargo
+            Sí, Eliminar
           </Button>
         </ModalFooter>
       </ModalContent>

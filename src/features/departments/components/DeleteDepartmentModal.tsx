@@ -10,20 +10,19 @@ import {
 } from "@heroui/react";
 import { AlertTriangle } from "lucide-react";
 
-interface DeleteRoleModalProps {
+interface DeleteDepartmentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  roleName: string;
+  departmentName: string;
 }
 
-export function DeleteRoleModal({
+export function DeleteDepartmentModal({
   isOpen,
   onClose,
-  roleName,
-}: DeleteRoleModalProps) {
+  departmentName,
+}: DeleteDepartmentModalProps) {
   const handleDelete = () => {
-    // Aquí iría la lógica de eliminación
-    console.log("Eliminando cargo:", roleName);
+    console.log("Eliminando departamento:", departmentName);
     onClose();
   };
 
@@ -35,13 +34,14 @@ export function DeleteRoleModal({
             <AlertTriangle className="w-12 h-12 text-red-600 dark:text-red-500" />
           </div>
           <h3 className="text-xl font-semibold text-center">
-            ¿Estás seguro/a que deseas eliminar este cargo?
+            ¿Estás seguro/a que deseas eliminar este departamento?
           </h3>
         </ModalHeader>
         <ModalBody className="text-center">
           <p className="text-gray-500 dark:text-gray-400">
-            Los usuarios asignados a este cargo quedarán sin un cargo asociado y
-            podrían perder ciertos permisos.
+            Al eliminar el departamento, los usuarios asignados a él ya no
+            tendrán un departamento asociado y podrían perder ciertos accesos o
+            configuraciones.
           </p>
         </ModalBody>
         <ModalFooter className="justify-center pb-6">
@@ -49,7 +49,7 @@ export function DeleteRoleModal({
             Cancelar
           </Button>
           <Button color="danger" onPress={handleDelete}>
-            Eliminar cargo
+            Eliminar departamento
           </Button>
         </ModalFooter>
       </ModalContent>
