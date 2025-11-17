@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, Eye, EyeOff, Lock } from "lucide-react";
 import { ROUTES } from "@/shared/constants/routes";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,11 +13,16 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { login, isLoading, error } = useAuthContext();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple redirect to dashboard - no authentication logic
-    router.push(ROUTES.REQUESTS);
+    try {
+      await login({ email, password });
+      router.push(ROUTES.HOME);
+    } catch (err) {
+      console.error("Login error:", err);
+    }
   };
 
   return (
@@ -28,6 +34,13 @@ export default function Login() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        {/* Error Message */}
+        {error && (
+          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          </div>
+        )}
+
         {/* Email Input */}
         <Input
           type="email"
@@ -39,6 +52,7 @@ export default function Login() {
           variant="bordered"
           labelPlacement="outside"
           isRequired
+          isDisabled={isLoading}
         />
 
         {/* Password Input */}
@@ -65,6 +79,7 @@ export default function Login() {
           variant="bordered"
           labelPlacement="outside"
           isRequired
+          isDisabled={isLoading}
         />
 
         {/* Remember me & Forgot password */}
@@ -76,6 +91,7 @@ export default function Login() {
             classNames={{
               wrapper: "before:border-black after:bg-black",
             }}
+            isDisabled={isLoading}
           >
             <span className="text-sm font-semibold">Recordar contraseña</span>
           </Checkbox>
@@ -93,8 +109,10 @@ export default function Login() {
           type="submit"
           className="w-full bg-black text-white mt-4"
           size="lg"
+          isLoading={isLoading}
+          isDisabled={isLoading}
         >
-          Ingresar
+          {isLoading ? "Ingresando..." : "Ingresar"}
         </Button>
       </form>
     </div>

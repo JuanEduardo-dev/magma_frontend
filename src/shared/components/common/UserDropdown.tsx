@@ -7,6 +7,7 @@ import {
   DropdownItem,
 } from "@heroui/react";
 import { User, Building2, LogOut, UserCog } from "lucide-react";
+import { useAuthContext } from "@/features/auth";
 
 interface UserDropdownProps {
   userName: string;
@@ -19,6 +20,11 @@ export function UserDropdown({
   userRole,
   onChangeCompany,
 }: UserDropdownProps) {
+  const { logout } = useAuthContext();
+
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -58,6 +64,7 @@ export function UserDropdown({
           startContent={<LogOut className="w-4 h-4" />}
           className="text-danger"
           color="danger"
+          onPress={handleLogout}
         >
           Cerrar sesión
         </DropdownItem>

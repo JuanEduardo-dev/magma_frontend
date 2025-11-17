@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { Sidebar } from "../components/common/Sidebar";
 import { TopBar } from "../components/common/TopBar";
+import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -18,20 +19,22 @@ export function MainLayout({
   userRole,
 }: MainLayoutProps) {
   return (
-    <div className="flex h-screen overflow-hidden bg-white dark:bg-zinc-950">
-      {/* Sidebar */}
-      <Sidebar />
+    <ProtectedRoute>
+      <div className="flex h-screen overflow-hidden bg-white dark:bg-zinc-950">
+        {/* Sidebar */}
+        <Sidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* TopBar */}
-        <TopBar title={title} userName={userName} userRole={userRole} />
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* TopBar */}
+          <TopBar title={title} userName={userName} userRole={userRole} />
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-white dark:bg-zinc-950 p-6">
-          {children}
-        </main>
+          {/* Page Content */}
+          <main className="flex-1 overflow-y-auto bg-white dark:bg-zinc-950 p-6">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
