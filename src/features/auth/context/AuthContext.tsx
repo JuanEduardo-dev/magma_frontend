@@ -2,6 +2,7 @@
 
 import { createContext, type ReactNode, useContext } from "react";
 import { useAuthQueries } from "../hooks/useAuthQueries";
+import { useInitializeAuth } from "../hooks/useInitializeAuth";
 import type { LoginCredentials } from "../services/authService";
 import type { IUser } from "../types/IUser";
 
@@ -21,6 +22,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  useInitializeAuth(); // Inicializar auth desde cookies
   const auth = useAuthQueries();
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };

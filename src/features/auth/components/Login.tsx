@@ -2,7 +2,6 @@
 
 import { Button, Checkbox, Input, Link } from "@heroui/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Mail, Eye, EyeOff, Lock } from "lucide-react";
 import { ROUTES } from "@/shared/constants/routes";
 import { useAuthContext } from "../context/AuthContext";
@@ -12,14 +11,14 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const { login, isLoading, error } = useAuthContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await login({ email, password });
-      router.push(ROUTES.HOME);
+      // Redirigir a peticiones después del login exitoso
+      window.location.href = ROUTES.REQUESTS;
     } catch (err) {
       console.error("Login error:", err);
     }
