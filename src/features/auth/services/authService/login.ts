@@ -1,16 +1,5 @@
 import { axiosInstance } from "@/shared/services/axiosInstance";
-
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  message: string;
-  access_token: string;
-  permissions: string[];
-  refresh_token: string;
-}
+import type { LoginCredentials, AuthResponse } from "./types";
 
 export const login = async (
   credentials: LoginCredentials,
@@ -18,8 +7,10 @@ export const login = async (
   accessToken: string;
   refreshToken: string;
   permissions: string[];
+  companies?: { id: string; name: string }[];
+  defaultCompanyId?: string | null;
 }> => {
-  const { data } = await axiosInstance.post<LoginResponse>(
+  const { data } = await axiosInstance.post<AuthResponse>(
     "/auth/login",
     credentials,
   );
@@ -28,5 +19,7 @@ export const login = async (
     accessToken: data.access_token,
     refreshToken: data.refresh_token,
     permissions: data.permissions,
+    companies: data.companies,
+    defaultCompanyId: data.defaultCompanyId,
   };
 };

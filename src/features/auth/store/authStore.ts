@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import type { TAuthState } from "../types/TAuthState";
 import { getUserFromToken, isTokenExpired } from "../helpers/authHelpers";
 import { setCookie, deleteCookie, getCookie } from "../helpers/cookieHelpers";
-import type { IUser } from "../types/IUser";
+import type { IUser, Company } from "../types/IUser";
 
 export const authStore = create<TAuthState>()(
   persist(
@@ -13,8 +13,16 @@ export const authStore = create<TAuthState>()(
       isLoading: false,
       error: null,
       userInfo: null,
+      companies: null,
+      defaultCompanyId: null,
+      currentCompanyId: null,
 
-      setTokens: (accessToken: string, refreshToken?: string) => {
+      setTokens: (
+        accessToken: string,
+        refreshToken?: string,
+        companies?: Company[],
+        defaultCompanyId?: string | null,
+      ) => {
         const userInfo = accessToken ? getUserFromToken(accessToken) : null;
 
         // Guardar en cookies para que el middleware pueda acceder
@@ -23,10 +31,25 @@ export const authStore = create<TAuthState>()(
           setCookie("refreshToken", refreshToken);
         }
 
+        const currentCompanyId = defaultCompanyId || companies?.[0]?.id || null;
+
         if (refreshToken !== undefined) {
-          set({ accessToken, refreshToken, userInfo });
+          set({
+            accessToken,
+            refreshToken,
+            userInfo,
+            companies: companies || null,
+            defaultCompanyId: defaultCompanyId || null,
+            currentCompanyId,
+          });
         } else {
-          set({ accessToken, userInfo });
+          set({
+            accessToken,
+            userInfo,
+            companies: companies || null,
+            defaultCompanyId: defaultCompanyId || null,
+            currentCompanyId,
+          });
         }
       },
 
@@ -37,6 +60,9 @@ export const authStore = create<TAuthState>()(
           accessToken: null,
           refreshToken: null,
           userInfo: null,
+          companies: null,
+          defaultCompanyId: null,
+          currentCompanyId: null,
           error: null,
         });
       },
@@ -45,6 +71,10 @@ export const authStore = create<TAuthState>()(
       setError: (error: string | null) => set({ error }),
 
       setUserInfo: (userInfo: IUser) => set({ userInfo }),
+
+      setCurrentCompanyId: (companyId: string) => {
+        set({ currentCompanyId: companyId });
+      },
 
       getUserFromToken: () => {
         const { accessToken } = get();
@@ -65,6 +95,9 @@ export const authStore = create<TAuthState>()(
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
         userInfo: state.userInfo,
+        companies: state.companies,
+        defaultCompanyId: state.defaultCompanyId,
+        currentCompanyId: state.currentCompanyId,
       }),
     },
   ),

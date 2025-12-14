@@ -3,7 +3,7 @@
 import { createContext, type ReactNode, useContext } from "react";
 import { useAuthQueries } from "../hooks/useAuthQueries";
 import { useInitializeAuth } from "../hooks/useInitializeAuth";
-import type { LoginCredentials } from "../services/authService";
+import type { LoginCredentials, Company } from "../services/authService";
 import type { IUser } from "../types/IUser";
 
 interface AuthContextType {
@@ -11,8 +11,11 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  companies: Company[] | null;
+  currentCompanyId: string | null;
   login: (credentials: LoginCredentials) => Promise<unknown>;
   logout: () => Promise<void>;
+  switchCompany: (companyId: string) => Promise<unknown>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

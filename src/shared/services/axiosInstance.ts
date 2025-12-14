@@ -14,9 +14,17 @@ export const axiosInstance = axios.create({
 // Interceptor para agregar el token
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = authStore.getState().accessToken;
+    const { accessToken } = authStore.getState();
+    const token = accessToken;
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log(
+        "✅ Token agregado al header:",
+        token.substring(0, 20) + "...",
+      );
+    } else {
+      console.warn("⚠️ No hay token disponible para la solicitud");
     }
     return config;
   },
@@ -37,8 +45,9 @@ axiosInstance.interceptors.response.use(
 
       if (refreshToken) {
         try {
-          const { accessToken } = await refreshTokenFn(refreshToken);
-          authStore.getState().setTokens(accessToken, refreshToken);
+          const { accessToken, refreshToken: newRefreshToken } =
+            await refreshTokenFn(refreshToken);
+          authStore.getState().setTokens(accessToken, newRefreshToken);
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           return axiosInstance(originalRequest);
         } catch (refreshError) {

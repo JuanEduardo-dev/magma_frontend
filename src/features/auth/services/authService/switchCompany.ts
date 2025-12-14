@@ -1,8 +1,8 @@
 import { axiosInstance } from "@/shared/services/axiosInstance";
-import type { AuthResponse } from "./types";
+import type { SwitchCompanyResponse } from "./types";
 
-export const refreshTokenFn = async (
-  refreshToken: string,
+export const switchCompany = async (
+  companyId: string,
 ): Promise<{
   accessToken: string;
   refreshToken: string;
@@ -10,12 +10,12 @@ export const refreshTokenFn = async (
   companies?: { id: string; name: string }[];
   defaultCompanyId?: string | null;
 }> => {
-  const { data } = await axiosInstance.post<AuthResponse>(
-    "/auth/refresh",
+  const { data } = await axiosInstance.post<SwitchCompanyResponse>(
+    "/auth/switch-company",
     {},
     {
       headers: {
-        "x-refresh-token": refreshToken,
+        "x-company-id": companyId,
       },
     },
   );

@@ -9,30 +9,39 @@ import {
   RadioGroup,
   Radio,
 } from "@heroui/react";
+import { useSwitchCompany } from "@/features/auth/hooks/useSwitchCompany";
 
 interface ChangeCompanyModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+// Empresas hardcodeadas - en el futuro vendrán del auth context
 const companies = [
-  "Sala magma S.L.",
-  "Raco explanada S.L.",
-  "Innovación y modernización del comercio S.L.",
-  "Tambora open AIR S.L.",
-  "Imc alicante S.L.",
-  "TAKA parques temáticos, S.L.",
+  { id: "company-1", name: "Sala magma S.L." },
+  { id: "company-2", name: "Raco explanada S.L." },
+  { id: "company-3", name: "Innovación y modernización del comercio S.L." },
+  { id: "company-4", name: "Tambora open AIR S.L." },
+  { id: "company-5", name: "Imc alicante S.L." },
+  { id: "company-6", name: "TAKA parques temáticos, S.L." },
 ];
 
 export function ChangeCompanyModal({
   isOpen,
   onClose,
 }: ChangeCompanyModalProps) {
-  const [selectedCompany, setSelectedCompany] = useState(companies[0]);
+  const { switchCompany, isLoading, currentCompanyId } = useSwitchCompany();
+  const [selectedCompanyId, setSelectedCompanyId] = useState(
+    currentCompanyId || companies[0].id,
+  );
 
-  const handleChange = () => {
-    // No functionality - just UI
-    onClose();
+  const handleChange = async () => {
+    try {
+      await switchCompany(selectedCompanyId);
+      onClose();
+    } catch (error) {
+      console.error("Error al cambiar de empresa:", error);
+    }
   };
 
   return (
@@ -60,12 +69,12 @@ export function ChangeCompanyModal({
           {/* Companies List */}
           <div className="mb-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
             <RadioGroup
-              value={selectedCompany}
-              onValueChange={setSelectedCompany}
+              value={selectedCompanyId}
+              onValueChange={setSelectedCompanyId}
             >
               {companies.map((company) => (
-                <Radio key={company} value={company} className="mb-2">
-                  {company}
+                <Radio key={company.id} value={company.id} className="mb-2">
+                  {company.name}
                 </Radio>
               ))}
             </RadioGroup>
@@ -73,14 +82,21 @@ export function ChangeCompanyModal({
 
           {/* Actions */}
           <div className="flex justify-end gap-3">
-            <Button color="primary" size="lg" onPress={handleChange}>
-              Cambiar
+            <Button
+              color="primary"
+              size="lg"
+              onPress={handleChange}
+              isLoading={isLoading}
+              isDisabled={isLoading}
+            >
+              {isLoading ? "Cambiando..." : "Cambiar"}
             </Button>
             <Button
               variant="bordered"
               size="lg"
               onPress={onClose}
               color="primary"
+              isDisabled={isLoading}
             >
               Cancelar
             </Button>

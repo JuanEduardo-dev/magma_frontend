@@ -6,5 +6,5 @@ export {
   getCookie,
   deleteCookie,
 } from "./helpers/cookieHelpers";
-export type { IUser } from "./types/IUser";
-export type { LoginCredentials } from "./services/authService";
+export type { IUser, Company } from "./types/IUser";
+export type { LoginCredentials, AuthResponse } from "./services/authService";

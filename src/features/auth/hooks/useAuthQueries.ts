@@ -1,8 +1,10 @@
 import { authStore } from "../store/authStore";
 import { login } from "../services/authService/login";
 import { logout } from "../services/authService/logout";
+import { switchCompany } from "../services/authService/switchCompany";
 import type { LoginCredentials } from "../services/authService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ROUTES } from "@/shared/constants/routes";
 
 export const useAuthQueries = () => {
   const queryClient = useQueryClient();
@@ -16,6 +18,9 @@ export const useAuthQueries = () => {
     clearAuth,
     setIsLoading,
     setError,
+    companies,
+    currentCompanyId,
+    setCurrentCompanyId,
   } = authStore();
 
   // Login mutation
@@ -26,7 +31,12 @@ export const useAuthQueries = () => {
       setError(null);
     },
     onSuccess: async (data) => {
-      setTokens(data.accessToken, data.refreshToken);
+      setTokens(
+        data.accessToken,
+        data.refreshToken,
+        data.companies,
+        data.defaultCompanyId,
+      );
       setIsLoading(false);
     },
     onError: (error: Error | unknown) => {
@@ -40,9 +50,41 @@ export const useAuthQueries = () => {
     },
   });
 
+  // Switch company mutation
+  const switchCompanyMutation = useMutation({
+    mutationFn: (companyId: string) => switchCompany(companyId),
+    onMutate: () => {
+      setIsLoading(true);
+      setError(null);
+    },
+    onSuccess: async (data) => {
+      setTokens(
+        data.accessToken,
+        data.refreshToken,
+        data.companies,
+        data.defaultCompanyId,
+      );
+      setCurrentCompanyId(data.defaultCompanyId || "");
+      setIsLoading(false);
+    },
+    onError: (error: Error | unknown) => {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : (error as { response?: { data?: { message?: string } } })?.response
+              ?.data?.message || "Error al cambiar de empresa";
+      setError(errorMessage);
+      setIsLoading(false);
+    },
+  });
+
   // Logout mutation
   const logoutMutation = useMutation({
-    mutationFn: logout,
+    mutationFn: async () => {
+      // Capturar el token AHORA, antes de que sea borrado
+      const currentToken = authStore.getState().accessToken;
+      return logout(currentToken || undefined);
+    },
     onMutate: () => {
       setIsLoading(true);
     },
@@ -50,6 +92,7 @@ export const useAuthQueries = () => {
       clearAuth();
       queryClient.clear();
       setIsLoading(false);
+      window.location.href = ROUTES.LOGIN;
     },
     onError: (error: Error | unknown) => {
       console.error("Error during logout:", error);
@@ -63,6 +106,10 @@ export const useAuthQueries = () => {
     return loginMutation.mutateAsync(credentials);
   };
 
+  const handleSwitchCompany = async (companyId: string) => {
+    return switchCompanyMutation.mutateAsync(companyId);
+  };
+
   const handleLogout = async () => {
     return logoutMutation.mutateAsync();
   };
@@ -72,9 +119,16 @@ export const useAuthQueries = () => {
   return {
     user,
     isAuthenticated: getIsAuthenticated(),
-    isLoading: isLoading || loginMutation.isPending || logoutMutation.isPending,
+    isLoading:
+      isLoading ||
+      loginMutation.isPending ||
+      logoutMutation.isPending ||
+      switchCompanyMutation.isPending,
     error,
     login: handleLogin,
     logout: handleLogout,
+    switchCompany: handleSwitchCompany,
+    companies,
+    currentCompanyId,
   };
 };
