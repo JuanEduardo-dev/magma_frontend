@@ -12,12 +12,10 @@ import {
   Gift,
   FolderOpen,
   Package,
-  CreditCard,
   Shield,
   Cog,
   ChevronDown,
   X,
-  Menu,
 } from "lucide-react";
 import { Logo } from "./Logo";
 import { ROUTES } from "@/shared/constants/routes";
@@ -201,9 +199,17 @@ export function Sidebar({
     <>
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
-        <div
+        <button
+          type="button"
           className="lg:hidden fixed inset-0 bg-black/50 z-40"
           onClick={onCloseMobileMenu}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              onCloseMobileMenu?.();
+            }
+          }}
+          aria-label="Cerrar menú"
+          tabIndex={0}
         />
       )}
 
@@ -219,7 +225,7 @@ export function Sidebar({
       >
         {/* Logo Header */}
         <div className="relative shrink-0 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-          {/* Mobile Close Button */}
+          {/* Mobile Close Button
           <button
             type="button"
             onClick={onCloseMobileMenu}
@@ -227,7 +233,7 @@ export function Sidebar({
             aria-label="Cerrar menú"
           >
             <X className="w-5 h-5 text-zinc-900 dark:text-white" />
-          </button>
+          </button>*/}
 
           <div className="flex flex-col items-center justify-center px-6 py-7 gap-2.5">
             <Logo />

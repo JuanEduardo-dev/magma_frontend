@@ -222,11 +222,8 @@ export function PeticionesPage() {
             </div>
           </div>
 
-          <div className="overflow-x-auto -mx-4">
-            <Table
-              aria-label="Tabla de peticiones"
-              classNames={{ wrapper: "shadow-none" }}
-            >
+          <div className="overflow-x-auto">
+            <Table aria-label="Tabla de peticiones" removeWrapper>
               <TableHeader>
                 <TableColumn key="empleado">EMPLEADO</TableColumn>
                 <TableColumn key="tipo">TIPO</TableColumn>

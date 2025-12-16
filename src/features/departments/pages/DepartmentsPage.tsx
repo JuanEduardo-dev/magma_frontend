@@ -42,7 +42,7 @@ export function DepartmentsPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Search and Actions */}
       <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
         <Input
