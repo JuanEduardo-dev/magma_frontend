@@ -157,7 +157,7 @@ export default function UsersManagementPage() {
           </div>
 
           {/* Table */}
-          <div className="overflow-x-auto -mx-6 px-6">
+          <div className="overflow-x-auto">
             <Table
               aria-label="Tabla de usuarios"
               sortDescriptor={sortDescriptor}

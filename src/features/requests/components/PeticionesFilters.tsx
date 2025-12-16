@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   SelectItem,
+  DatePicker,
 } from "@heroui/react";
 
 interface PeticionesFiltersProps {
@@ -25,19 +26,27 @@ export function PeticionesFilters({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           {/* Buscar por empleado */}
           <div className="space-y-2">
-            <label htmlFor="search-empleado" className="text-sm font-medium">
+            <label
+              htmlFor="search-empleado"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+            >
               Buscar empleado
             </label>
             <Input
               id="search-empleado"
               placeholder="Nombre del empleado"
-              startContent={<Search className="w-4 h-4 text-zinc-500" />}
+              startContent={
+                <Search className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
+              }
             />
           </div>
 
           {/* Estado */}
           <div className="space-y-2">
-            <label htmlFor="estado" className="text-sm font-medium">
+            <label
+              htmlFor="estado"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+            >
               Estado
             </label>
             <Select
@@ -45,7 +54,7 @@ export function PeticionesFilters({
               placeholder="Todos los estados"
               aria-label="Estado"
               classNames={{
-                trigger: "bg-zinc-100",
+                trigger: "bg-zinc-100 dark:bg-zinc-800",
               }}
             >
               <SelectItem key="todos">Todos</SelectItem>
@@ -58,7 +67,10 @@ export function PeticionesFilters({
 
           {/* Tipo de petición */}
           <div className="space-y-2">
-            <label htmlFor="tipo" className="text-sm font-medium">
+            <label
+              htmlFor="tipo"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+            >
               Tipo de petición
             </label>
             <Select
@@ -66,7 +78,7 @@ export function PeticionesFilters({
               placeholder="Todos los tipos"
               aria-label="Tipo de petición"
               classNames={{
-                trigger: "bg-zinc-100",
+                trigger: "bg-zinc-100 dark:bg-zinc-800",
               }}
             >
               <SelectItem key="todos">Todos</SelectItem>
@@ -79,7 +91,10 @@ export function PeticionesFilters({
 
           {/* Departamento */}
           <div className="space-y-2">
-            <label htmlFor="departamento" className="text-sm font-medium">
+            <label
+              htmlFor="departamento"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+            >
               Departamento
             </label>
             <Select
@@ -87,7 +102,7 @@ export function PeticionesFilters({
               placeholder="Todos los departamentos"
               aria-label="Departamento"
               classNames={{
-                trigger: "bg-zinc-100",
+                trigger: "bg-zinc-100 dark:bg-zinc-800",
               }}
             >
               <SelectItem key="todos">Todos</SelectItem>
@@ -103,16 +118,22 @@ export function PeticionesFilters({
         {/* Rango de fechas */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           <div className="space-y-2">
-            <label htmlFor="fecha-inicio" className="text-sm font-medium">
+            <label
+              htmlFor="fecha-inicio"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+            >
               Fecha de inicio
             </label>
-            <Input id="fecha-inicio" type="date" />
+            <DatePicker aria-label="Fecha de inicio" className="w-full" />
           </div>
           <div className="space-y-2">
-            <label htmlFor="fecha-fin" className="text-sm font-medium">
+            <label
+              htmlFor="fecha-fin"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
+            >
               Fecha de fin
             </label>
-            <Input id="fecha-fin" type="date" />
+            <DatePicker aria-label="Fecha de fin" className="w-full" />
           </div>
         </div>
 

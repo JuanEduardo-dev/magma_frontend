@@ -10,6 +10,9 @@ import {
   X,
   Edit2,
   Paperclip,
+  FileText,
+  Clock,
+  XCircle,
 } from "lucide-react";
 import {
   Button,
@@ -168,12 +171,24 @@ export function PeticionesPage() {
         <MetricsCard
           title="Total Peticiones"
           value="156"
-          icon="file-text"
+          icon={<FileText className="w-5 h-5" />}
           trend={{ value: 12, isPositive: true }}
         />
-        <MetricsCard title="Pendientes" value="23" icon="clock" />
-        <MetricsCard title="Aprobadas" value="98" icon="check-circle" />
-        <MetricsCard title="Rechazadas" value="12" icon="x-circle" />
+        <MetricsCard
+          title="Pendientes"
+          value="23"
+          icon={<Clock className="w-5 h-5" />}
+        />
+        <MetricsCard
+          title="Aprobadas"
+          value="98"
+          icon={<CheckCircle className="w-5 h-5" />}
+        />
+        <MetricsCard
+          title="Rechazadas"
+          value="12"
+          icon={<XCircle className="w-5 h-5" />}
+        />
       </div>
 
       {/* Filtros */}
@@ -184,7 +199,7 @@ export function PeticionesPage() {
 
       {/* Tabla */}
       <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
-        <CardBody>
+        <CardBody className="p-6">
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-4">
             <h2 className="text-xl font-semibold">Todas las peticiones</h2>
             <div className="flex items-center gap-3">
@@ -207,7 +222,7 @@ export function PeticionesPage() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-4">
             <Table
               aria-label="Tabla de peticiones"
               classNames={{ wrapper: "shadow-none" }}
