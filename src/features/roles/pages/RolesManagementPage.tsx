@@ -41,7 +41,7 @@ export function RolesManagementPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Breadcrumb */}
       <Breadcrumbs>
         <BreadcrumbItem href="/configuration">Configuración</BreadcrumbItem>
