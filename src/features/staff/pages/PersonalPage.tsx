@@ -203,7 +203,7 @@ export function PersonalPage() {
       </Card>
 
       {/* Acciones */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
         <p className="text-zinc-600">
           Mostrando {filteredEmpleados.length} de {empleados.length} empleados
         </p>
@@ -211,6 +211,7 @@ export function PersonalPage() {
           <Button
             variant="bordered"
             startContent={<Download className="w-4 h-4" />}
+            className="flex-1 sm:flex-none"
           >
             Exportar
             <ChevronDown className="w-4 h-4 ml-1" />
@@ -219,6 +220,7 @@ export function PersonalPage() {
             color="primary"
             onPress={() => setIsNewEmpleadoModalOpen(true)}
             startContent={<Plus className="w-4 h-4" />}
+            className="flex-1 sm:flex-none"
           >
             Nuevo empleado
           </Button>
@@ -228,27 +230,29 @@ export function PersonalPage() {
       {/* Tabla */}
       <Card>
         <CardBody>
-          <Table aria-label="Tabla de personal">
-            <TableHeader>
-              <TableColumn key="foto">FOTO</TableColumn>
-              <TableColumn key="nombreCompleto">NOMBRE COMPLETO</TableColumn>
-              <TableColumn key="cargo">CARGO</TableColumn>
-              <TableColumn key="departamento">DEPARTAMENTO</TableColumn>
-              <TableColumn key="email">EMAIL</TableColumn>
-              <TableColumn key="telefono">TELÉFONO</TableColumn>
-              <TableColumn key="estadoLaboral">ESTADO LABORAL</TableColumn>
-              <TableColumn key="acciones">ACCIONES</TableColumn>
-            </TableHeader>
-            <TableBody items={filteredEmpleados}>
-              {(empleado) => (
-                <TableRow key={empleado.id}>
-                  {(columnKey) => (
-                    <TableCell>{renderCell(empleado, columnKey)}</TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table aria-label="Tabla de personal">
+              <TableHeader>
+                <TableColumn key="foto">FOTO</TableColumn>
+                <TableColumn key="nombreCompleto">NOMBRE COMPLETO</TableColumn>
+                <TableColumn key="cargo">CARGO</TableColumn>
+                <TableColumn key="departamento">DEPARTAMENTO</TableColumn>
+                <TableColumn key="email">EMAIL</TableColumn>
+                <TableColumn key="telefono">TELÉFONO</TableColumn>
+                <TableColumn key="estadoLaboral">ESTADO LABORAL</TableColumn>
+                <TableColumn key="acciones">ACCIONES</TableColumn>
+              </TableHeader>
+              <TableBody items={filteredEmpleados}>
+                {(empleado) => (
+                  <TableRow key={empleado.id}>
+                    {(columnKey) => (
+                      <TableCell>{renderCell(empleado, columnKey)}</TableCell>
+                    )}
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardBody>
       </Card>
 

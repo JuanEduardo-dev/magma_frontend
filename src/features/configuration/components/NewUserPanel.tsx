@@ -30,9 +30,9 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
       />
 
       {/* Panel */}
-      <div className="fixed right-0 top-0 h-screen w-full md:w-[600px] bg-white dark:bg-zinc-900 z-50 shadow-xl overflow-y-auto">
+      <div className="fixed right-0 top-0 h-screen w-full md:w-[600px] bg-white dark:bg-zinc-950 z-50 shadow-xl overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800 p-6 flex items-center justify-between z-999">
+        <div className="sticky top-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800 p-6 flex items-center justify-between z-999">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
             Nuevo usuario
           </h2>
@@ -48,7 +48,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
         {/* Content */}
         <div className="p-6 pb-0 space-y-6">
           {/* Información Personal y de Contacto */}
-          <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+          <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
             <CardBody className="p-6 space-y-4">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Información Personal y de Contacto
@@ -98,7 +98,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
           </Card>
 
           {/* Credenciales de Acceso y Documentación */}
-          <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+          <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
             <CardBody className="p-6 space-y-4">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Credenciales de Acceso y Documentación
@@ -125,7 +125,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
           </Card>
 
           {/* Información Domiciliaria y Opcional */}
-          <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+          <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
             <CardBody className="p-6 space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -157,7 +157,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
           </Card>
 
           {/* Contrato/s de trabajo */}
-          <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+          <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
             <CardBody className="p-6 space-y-4">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Contrato/s de trabajo
@@ -210,7 +210,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
                 <p className="text-sm text-gray-700 dark:text-gray-300">
                   Contrato (PDF)
                 </p>
-                <Card className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-none">
+                <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
                   <CardBody className="p-8">
                     <button
                       type="button"
@@ -245,7 +245,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Centros de trabajo
             </h3>
-            <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+            <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
               <CardBody className="p-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Select
@@ -276,7 +276,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
                 </button>
               </CardBody>
             </Card>
-            <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+            <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
               <CardBody className="p-4">
                 <div className="grid grid-cols-2 gap-4">
                   <Select
@@ -317,7 +317,7 @@ export function NewUserPanel({ isOpen, onClose }: NewUserPanelProps) {
           </div>
 
           {/* Action Buttons */}
-          <div className="sticky bottom-0 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 z-999 -mx-6 px-6 py-4">
+          <div className="sticky bottom-0 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 z-999 -mx-6 px-6 py-4">
             <div className="flex justify-end gap-3">
               <Button
                 variant="bordered"

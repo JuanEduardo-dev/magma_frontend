@@ -100,100 +100,34 @@ export function RoleDetailPage({ roleId }: RoleDetailPageProps) {
       />
 
       {/* Permissions Table */}
-      <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
         <CardBody className="p-0">
-          <Table removeWrapper aria-label="Tabla de permisos">
-            <TableHeader>
-              <TableColumn className="w-1/3">Funcionalidades</TableColumn>
-              <TableColumn className="text-center">Ver (propios)</TableColumn>
-              <TableColumn className="text-center">Ver (global)</TableColumn>
-              <TableColumn className="text-center">Crear</TableColumn>
-              <TableColumn className="text-center">Editar</TableColumn>
-              <TableColumn className="text-center">Eliminar</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {permissions.map((permission, moduleIndex) => (
-                <>
-                  {/* Module Row */}
-                  <TableRow key={`${permission.module}-main`}>
-                    <TableCell>
-                      <div className="font-semibold text-gray-900 dark:text-white">
-                        {permission.module}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Checkbox
-                          isSelected={permission.viewOwn}
-                          onValueChange={() =>
-                            handlePermissionChange(moduleIndex, "viewOwn")
-                          }
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Checkbox
-                          isSelected={permission.viewGlobal}
-                          onValueChange={() =>
-                            handlePermissionChange(moduleIndex, "viewGlobal")
-                          }
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Checkbox
-                          isSelected={permission.create}
-                          onValueChange={() =>
-                            handlePermissionChange(moduleIndex, "create")
-                          }
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Checkbox
-                          isSelected={permission.edit}
-                          onValueChange={() =>
-                            handlePermissionChange(moduleIndex, "edit")
-                          }
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <Checkbox
-                          isSelected={permission.delete}
-                          onValueChange={() =>
-                            handlePermissionChange(moduleIndex, "delete")
-                          }
-                        />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-
-                  {/* Sub-modules Rows */}
-                  {permission.subModules?.map((subModule, subIndex) => (
-                    <TableRow
-                      key={`${permission.module}-${subModule.name}`}
-                      className="bg-zinc-50 dark:bg-zinc-900/50"
-                    >
+          <div className="overflow-x-auto">
+            <Table removeWrapper aria-label="Tabla de permisos">
+              <TableHeader>
+                <TableColumn className="w-1/3">Funcionalidades</TableColumn>
+                <TableColumn className="text-center">Ver (propios)</TableColumn>
+                <TableColumn className="text-center">Ver (global)</TableColumn>
+                <TableColumn className="text-center">Crear</TableColumn>
+                <TableColumn className="text-center">Editar</TableColumn>
+                <TableColumn className="text-center">Eliminar</TableColumn>
+              </TableHeader>
+              <TableBody>
+                {permissions.map((permission, moduleIndex) => (
+                  <>
+                    {/* Module Row */}
+                    <TableRow key={`${permission.module}-main`}>
                       <TableCell>
-                        <div className="pl-6 text-sm text-gray-700 dark:text-gray-300">
-                          {subModule.name}
+                        <div className="font-semibold text-gray-900 dark:text-white">
+                          {permission.module}
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex justify-center">
                           <Checkbox
-                            isSelected={subModule.viewOwn}
+                            isSelected={permission.viewOwn}
                             onValueChange={() =>
-                              handleSubModulePermissionChange(
-                                moduleIndex,
-                                subIndex,
-                                "viewOwn",
-                              )
+                              handlePermissionChange(moduleIndex, "viewOwn")
                             }
                           />
                         </div>
@@ -201,13 +135,9 @@ export function RoleDetailPage({ roleId }: RoleDetailPageProps) {
                       <TableCell>
                         <div className="flex justify-center">
                           <Checkbox
-                            isSelected={subModule.viewGlobal}
+                            isSelected={permission.viewGlobal}
                             onValueChange={() =>
-                              handleSubModulePermissionChange(
-                                moduleIndex,
-                                subIndex,
-                                "viewGlobal",
-                              )
+                              handlePermissionChange(moduleIndex, "viewGlobal")
                             }
                           />
                         </div>
@@ -215,13 +145,9 @@ export function RoleDetailPage({ roleId }: RoleDetailPageProps) {
                       <TableCell>
                         <div className="flex justify-center">
                           <Checkbox
-                            isSelected={subModule.create}
+                            isSelected={permission.create}
                             onValueChange={() =>
-                              handleSubModulePermissionChange(
-                                moduleIndex,
-                                subIndex,
-                                "create",
-                              )
+                              handlePermissionChange(moduleIndex, "create")
                             }
                           />
                         </div>
@@ -229,13 +155,9 @@ export function RoleDetailPage({ roleId }: RoleDetailPageProps) {
                       <TableCell>
                         <div className="flex justify-center">
                           <Checkbox
-                            isSelected={subModule.edit}
+                            isSelected={permission.edit}
                             onValueChange={() =>
-                              handleSubModulePermissionChange(
-                                moduleIndex,
-                                subIndex,
-                                "edit",
-                              )
+                              handlePermissionChange(moduleIndex, "edit")
                             }
                           />
                         </div>
@@ -243,23 +165,103 @@ export function RoleDetailPage({ roleId }: RoleDetailPageProps) {
                       <TableCell>
                         <div className="flex justify-center">
                           <Checkbox
-                            isSelected={subModule.delete}
+                            isSelected={permission.delete}
                             onValueChange={() =>
-                              handleSubModulePermissionChange(
-                                moduleIndex,
-                                subIndex,
-                                "delete",
-                              )
+                              handlePermissionChange(moduleIndex, "delete")
                             }
                           />
                         </div>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </>
-              ))}
-            </TableBody>
-          </Table>
+
+                    {/* Sub-modules Rows */}
+                    {permission.subModules?.map((subModule, subIndex) => (
+                      <TableRow
+                        key={`${permission.module}-${subModule.name}`}
+                        className="bg-zinc-50 dark:bg-zinc-900/50"
+                      >
+                        <TableCell>
+                          <div className="pl-6 text-sm text-gray-700 dark:text-gray-300">
+                            {subModule.name}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex justify-center">
+                            <Checkbox
+                              isSelected={subModule.viewOwn}
+                              onValueChange={() =>
+                                handleSubModulePermissionChange(
+                                  moduleIndex,
+                                  subIndex,
+                                  "viewOwn",
+                                )
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex justify-center">
+                            <Checkbox
+                              isSelected={subModule.viewGlobal}
+                              onValueChange={() =>
+                                handleSubModulePermissionChange(
+                                  moduleIndex,
+                                  subIndex,
+                                  "viewGlobal",
+                                )
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex justify-center">
+                            <Checkbox
+                              isSelected={subModule.create}
+                              onValueChange={() =>
+                                handleSubModulePermissionChange(
+                                  moduleIndex,
+                                  subIndex,
+                                  "create",
+                                )
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex justify-center">
+                            <Checkbox
+                              isSelected={subModule.edit}
+                              onValueChange={() =>
+                                handleSubModulePermissionChange(
+                                  moduleIndex,
+                                  subIndex,
+                                  "edit",
+                                )
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex justify-center">
+                            <Checkbox
+                              isSelected={subModule.delete}
+                              onValueChange={() =>
+                                handleSubModulePermissionChange(
+                                  moduleIndex,
+                                  subIndex,
+                                  "delete",
+                                )
+                              }
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardBody>
       </Card>
     </div>

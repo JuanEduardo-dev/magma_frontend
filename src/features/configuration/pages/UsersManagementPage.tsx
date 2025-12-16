@@ -80,7 +80,7 @@ export default function UsersManagementPage() {
       </Breadcrumbs>
 
       {/* Search and Actions */}
-      <div className="flex gap-3 items-center">
+      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
         <Input
           placeholder="Buscar usuarios..."
           startContent={<Search className="w-4 h-4 text-zinc-500" />}
@@ -89,24 +89,28 @@ export default function UsersManagementPage() {
           className="flex-1"
           variant="bordered"
         />
-        <Button
-          variant="bordered"
-          color="primary"
-          startContent={<FileDown className="w-4 h-4" />}
-        >
-          Exportar
-        </Button>
-        <Button
-          color="primary"
-          startContent={<Plus className="w-4 h-4" />}
-          onPress={() => setIsNewUserPanelOpen(true)}
-        >
-          Nuevo usuario
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            variant="bordered"
+            color="primary"
+            startContent={<FileDown className="w-4 h-4" />}
+            className="flex-1 sm:flex-none"
+          >
+            Exportar
+          </Button>
+          <Button
+            color="primary"
+            startContent={<Plus className="w-4 h-4" />}
+            onPress={() => setIsNewUserPanelOpen(true)}
+            className="flex-1 sm:flex-none"
+          >
+            Nuevo usuario
+          </Button>
+        </div>
       </div>
 
       {/* Users Table with Filters */}
-      <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
         <CardBody className="p-6 space-y-6">
           {/* Filters */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -153,79 +157,81 @@ export default function UsersManagementPage() {
           </div>
 
           {/* Table */}
-          <Table
-            aria-label="Tabla de usuarios"
-            sortDescriptor={sortDescriptor}
-            onSortChange={(descriptor) =>
-              setSortDescriptor({
-                column: descriptor.column as string,
-                direction: descriptor.direction as "ascending" | "descending",
-              })
-            }
-            removeWrapper
-          >
-            <TableHeader>
-              <TableColumn key="name" allowsSorting>
-                Nombre
-              </TableColumn>
-              <TableColumn key="email" allowsSorting>
-                Email
-              </TableColumn>
-              <TableColumn key="workplace" allowsSorting>
-                Centros de trabajo
-              </TableColumn>
-              <TableColumn key="role" allowsSorting>
-                Roles
-              </TableColumn>
-              <TableColumn key="system" allowsSorting>
-                Sistema
-              </TableColumn>
-              <TableColumn key="actions">Acción</TableColumn>
-            </TableHeader>
-            <TableBody items={sortedUsers}>
-              {(user) => (
-                <TableRow key={user.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar src={user.avatar} name={user.name} size="sm" />
-                      <span className="text-sm font-medium">{user.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {user.email}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{user.workplace}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{user.role}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{user.system}</span>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        className="p-1 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors"
-                      >
-                        <Pencil className="w-4 h-4 text-blue-600" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(user)}
-                        className="p-1 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4 text-red-600" />
-                      </button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto -mx-6 px-6">
+            <Table
+              aria-label="Tabla de usuarios"
+              sortDescriptor={sortDescriptor}
+              onSortChange={(descriptor) =>
+                setSortDescriptor({
+                  column: descriptor.column as string,
+                  direction: descriptor.direction as "ascending" | "descending",
+                })
+              }
+              removeWrapper
+            >
+              <TableHeader>
+                <TableColumn key="name" allowsSorting>
+                  Nombre
+                </TableColumn>
+                <TableColumn key="email" allowsSorting>
+                  Email
+                </TableColumn>
+                <TableColumn key="workplace" allowsSorting>
+                  Centros de trabajo
+                </TableColumn>
+                <TableColumn key="role" allowsSorting>
+                  Roles
+                </TableColumn>
+                <TableColumn key="system" allowsSorting>
+                  Sistema
+                </TableColumn>
+                <TableColumn key="actions">Acción</TableColumn>
+              </TableHeader>
+              <TableBody items={sortedUsers}>
+                {(user) => (
+                  <TableRow key={user.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <Avatar src={user.avatar} name={user.name} size="sm" />
+                        <span className="text-sm font-medium">{user.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        {user.email}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{user.workplace}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{user.role}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{user.system}</span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          className="p-1 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded transition-colors"
+                        >
+                          <Pencil className="w-4 h-4 text-blue-600" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(user)}
+                          className="p-1 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4 text-red-600" />
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardBody>
       </Card>
 

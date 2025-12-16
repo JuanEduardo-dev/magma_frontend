@@ -161,7 +161,7 @@ export function GeneralConfigurationTab() {
         </div>
 
         {/* Upload Zone */}
-        <Card className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-full shadow-none">
+        <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 w-full shadow-none">
           <CardBody className="p-8">
             <button
               type="button"

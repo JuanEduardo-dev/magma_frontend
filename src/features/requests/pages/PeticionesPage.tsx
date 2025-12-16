@@ -183,14 +183,15 @@ export function PeticionesPage() {
       />
 
       {/* Tabla */}
-      <Card className="border border-zinc-200 dark:border-zinc-800">
-        <CardBody className="dark:bg-zinc-900">
-          <div className="flex items-center justify-between mb-4">
+      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+        <CardBody>
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between mb-4">
             <h2 className="text-xl font-semibold">Todas las peticiones</h2>
             <div className="flex items-center gap-3">
               <Button
                 variant="bordered"
                 startContent={<Download className="w-4 h-4" />}
+                className="flex-1 sm:flex-none"
               >
                 Exportar
                 <ChevronDown className="w-4 h-4 ml-1" />
@@ -199,45 +200,48 @@ export function PeticionesPage() {
                 color="primary"
                 startContent={<Plus className="w-4 h-4" />}
                 onPress={() => setIsModalOpen(true)}
+                className="flex-1 sm:flex-none"
               >
                 Nueva petición
               </Button>
             </div>
           </div>
 
-          <Table
-            aria-label="Tabla de peticiones"
-            classNames={{ wrapper: "shadow-none" }}
-          >
-            <TableHeader>
-              <TableColumn key="empleado">EMPLEADO</TableColumn>
-              <TableColumn key="tipo">TIPO</TableColumn>
-              <TableColumn key="motivo">MOTIVO</TableColumn>
-              <TableColumn key="estado">ESTADO</TableColumn>
-              <TableColumn key="fechaCreacion">FECHA CREACIÓN</TableColumn>
-              <TableColumn key="fechaInicio">FECHA INICIO</TableColumn>
-              <TableColumn key="fechaFin">FECHA FIN</TableColumn>
-              <TableColumn key="duracion">DURACIÓN</TableColumn>
-              <TableColumn key="adjuntos" align="center">
-                ADJUNTOS
-              </TableColumn>
-              <TableColumn key="acciones" align="end">
-                ACCIONES
-              </TableColumn>
-            </TableHeader>
-            <TableBody items={peticiones}>
-              {(peticion) => (
-                <TableRow
-                  key={peticion.id}
-                  className="hover:bg-zinc-50 dark:hover:bg-zinc-800"
-                >
-                  {(columnKey) => (
-                    <TableCell>{renderCell(peticion, columnKey)}</TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <Table
+              aria-label="Tabla de peticiones"
+              classNames={{ wrapper: "shadow-none" }}
+            >
+              <TableHeader>
+                <TableColumn key="empleado">EMPLEADO</TableColumn>
+                <TableColumn key="tipo">TIPO</TableColumn>
+                <TableColumn key="motivo">MOTIVO</TableColumn>
+                <TableColumn key="estado">ESTADO</TableColumn>
+                <TableColumn key="fechaCreacion">FECHA CREACIÓN</TableColumn>
+                <TableColumn key="fechaInicio">FECHA INICIO</TableColumn>
+                <TableColumn key="fechaFin">FECHA FIN</TableColumn>
+                <TableColumn key="duracion">DURACIÓN</TableColumn>
+                <TableColumn key="adjuntos" align="center">
+                  ADJUNTOS
+                </TableColumn>
+                <TableColumn key="acciones" align="end">
+                  ACCIONES
+                </TableColumn>
+              </TableHeader>
+              <TableBody items={peticiones}>
+                {(peticion) => (
+                  <TableRow
+                    key={peticion.id}
+                    className="hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                  >
+                    {(columnKey) => (
+                      <TableCell>{renderCell(peticion, columnKey)}</TableCell>
+                    )}
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardBody>
       </Card>
 

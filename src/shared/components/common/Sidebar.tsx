@@ -16,6 +16,8 @@ import {
   Shield,
   Cog,
   ChevronDown,
+  X,
+  Menu,
 } from "lucide-react";
 import { Logo } from "./Logo";
 import { ROUTES } from "@/shared/constants/routes";
@@ -30,9 +32,15 @@ interface MenuItem {
 
 interface SidebarProps {
   className?: string;
+  isMobileMenuOpen?: boolean;
+  onCloseMobileMenu?: () => void;
 }
 
-export function Sidebar({ className = "" }: SidebarProps) {
+export function Sidebar({
+  className = "",
+  isMobileMenuOpen = false,
+  onCloseMobileMenu,
+}: SidebarProps) {
   const pathname = usePathname();
   const [expandedSections, setExpandedSections] = useState<string[]>(["rrhh"]);
 
@@ -97,7 +105,6 @@ export function Sidebar({ className = "" }: SidebarProps) {
       category: "Operaciones avanzadas",
       items: [
         { id: "stock", label: "Stock y compras", icon: Package, href: "#" },
-        { id: "pos", label: "POS y Cashless", icon: CreditCard, href: "#" },
       ],
     },
     {
@@ -133,6 +140,13 @@ export function Sidebar({ className = "" }: SidebarProps) {
     const isExpanded = expandedSections.includes(item.id);
     const hasChildren = item.children && item.children.length > 0;
 
+    const handleNavigation = () => {
+      // Cerrar el menú móvil al navegar
+      if (onCloseMobileMenu) {
+        onCloseMobileMenu();
+      }
+    };
+
     const buttonContent = (
       <>
         <div className="flex items-center gap-2">
@@ -153,7 +167,7 @@ export function Sidebar({ className = "" }: SidebarProps) {
 
     const buttonClasses = `flex items-center justify-between w-full px-4 py-2 rounded-lg transition-colors ${
       level > 0 ? "pl-12" : ""
-    } ${isActive ? "bg-zinc-200" : "hover:bg-zinc-100"}`;
+    } ${isActive ? "bg-zinc-200 dark:bg-zinc-700" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}`;
 
     return (
       <div key={item.id}>
@@ -166,7 +180,11 @@ export function Sidebar({ className = "" }: SidebarProps) {
             {buttonContent}
           </button>
         ) : (
-          <Link href={item.href || "#"} className={buttonClasses}>
+          <Link
+            href={item.href || "#"}
+            className={buttonClasses}
+            onClick={handleNavigation}
+          >
             {buttonContent}
           </Link>
         )}
@@ -180,34 +198,61 @@ export function Sidebar({ className = "" }: SidebarProps) {
   };
 
   return (
-    <div
-      className={`bg-zinc-50 dark:bg-zinc-900 relative h-screen flex flex-col border-r border-zinc-200 dark:border-zinc-800 overflow-y-auto ${className}`}
-    >
-      {/* Logo Header */}
-      <div className="relative shrink-0 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-        <div className="flex flex-col items-center justify-center px-6 py-7 gap-2.5">
-          <Logo />
-          <p className="text-zinc-500 dark:text-zinc-400 text-sm text-nowrap whitespace-pre">
-            Sistema de gestión
-          </p>
-        </div>
-      </div>
+    <>
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={onCloseMobileMenu}
+        />
+      )}
 
-      {/* Navigation Menu */}
-      <div className="flex-1 overflow-y-auto">
-        {menuStructure.map((section) => (
-          <div key={section.category} className="py-4">
-            <div className="px-6 mb-2">
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium uppercase">
-                {section.category}
-              </p>
-            </div>
-            <nav className="flex flex-col gap-1 px-2">
-              {section.items.map((item) => renderMenuItem(item))}
-            </nav>
+      {/* Sidebar */}
+      <aside
+        className={`bg-white dark:bg-zinc-950 h-screen flex flex-col border-r border-zinc-200 dark:border-zinc-800 overflow-y-auto
+        fixed lg:relative
+        w-64 lg:w-auto
+        transition-transform duration-300 ease-in-out lg:transition-none
+        z-50 lg:z-auto
+        ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        ${className}`}
+      >
+        {/* Logo Header */}
+        <div className="relative shrink-0 w-full border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+          {/* Mobile Close Button */}
+          <button
+            type="button"
+            onClick={onCloseMobileMenu}
+            className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            aria-label="Cerrar menú"
+          >
+            <X className="w-5 h-5 text-zinc-900 dark:text-white" />
+          </button>
+
+          <div className="flex flex-col items-center justify-center px-6 py-7 gap-2.5">
+            <Logo />
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm text-nowrap whitespace-pre">
+              Sistema de gestión
+            </p>
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+
+        {/* Navigation Menu */}
+        <div className="flex-1 overflow-y-auto">
+          {menuStructure.map((section) => (
+            <div key={section.category} className="py-4">
+              <div className="px-6 mb-2">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium uppercase">
+                  {section.category}
+                </p>
+              </div>
+              <nav className="flex flex-col gap-1 px-2">
+                {section.items.map((item) => renderMenuItem(item))}
+              </nav>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </>
   );
 }

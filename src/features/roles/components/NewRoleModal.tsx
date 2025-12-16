@@ -72,7 +72,7 @@ export function NewRoleModal({ isOpen, onClose }: NewRoleModalProps) {
             >
               Añadir usuario
             </label>
-            <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+            <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
               <CardBody className="p-4 space-y-3">
                 <Input
                   id="search-users"

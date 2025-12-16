@@ -83,7 +83,7 @@ export function NewDepartmentModal({
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Añadir usuario
               </span>
-              <Card className="border border-zinc-200 dark:border-zinc-800 shadow-none">
+              <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
                 <CardBody className="p-4 space-y-3">
                   <Input
                     placeholder="Buscar usuario..."

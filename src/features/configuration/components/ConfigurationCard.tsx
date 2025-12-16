@@ -18,7 +18,7 @@ export function ConfigurationCard({ option }: ConfigurationCardProps) {
     <Card
       isPressable
       onPress={() => router.push(option.href)}
-      className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-primary transition-colors w-full shadow-none"
+      className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 hover:border-primary transition-colors w-full shadow-none"
     >
       <CardBody className="p-6 overflow-hidden">
         <div className="flex gap-4 items-center w-full">
