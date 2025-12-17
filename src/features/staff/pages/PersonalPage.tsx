@@ -75,7 +75,7 @@ export function PersonalPage() {
     switch (columnKey) {
       case "foto":
         return (
-          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+          <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
             {empleado.foto ? (
               <Image
                 src={empleado.foto}
@@ -85,15 +85,19 @@ export function PersonalPage() {
                 className="object-cover"
               />
             ) : (
-              <UserIcon className="w-5 h-5 text-blue-600" />
+              <UserIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             )}
           </div>
         );
       case "nombreCompleto":
         return (
           <div>
-            <p className="font-medium">{empleado.nombreCompleto}</p>
-            <p className="text-sm text-zinc-500">{empleado.dni}</p>
+            <p className="font-medium text-zinc-900 dark:text-zinc-100">
+              {empleado.nombreCompleto}
+            </p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              {empleado.dni}
+            </p>
           </div>
         );
       case "cargo":
@@ -101,10 +105,16 @@ export function PersonalPage() {
       case "departamento":
         return empleado.departamento;
       case "email":
-        return <span className="text-sm text-zinc-600">{empleado.email}</span>;
+        return (
+          <span className="text-sm text-zinc-600 dark:text-zinc-400">
+            {empleado.email}
+          </span>
+        );
       case "telefono":
         return (
-          <span className="text-sm text-zinc-600">{empleado.telefono}</span>
+          <span className="text-sm text-zinc-600 dark:text-zinc-400">
+            {empleado.telefono}
+          </span>
         );
       case "estadoLaboral":
         return (
@@ -126,10 +136,10 @@ export function PersonalPage() {
               onPress={() => handleViewDetail(empleado)}
               aria-label="Ver detalle"
             >
-              <Eye className="w-4 h-4 text-blue-600" />
+              <Eye className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </Button>
             <Button isIconOnly size="sm" variant="light" aria-label="Editar">
-              <Edit2 className="w-4 h-4 text-zinc-500" />
+              <Edit2 className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
             </Button>
           </div>
         );
@@ -141,70 +151,79 @@ export function PersonalPage() {
   return (
     <div className="space-y-6">
       {/* Filtros */}
-      <Card className="border border-zinc-200">
-        <CardBody className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="md:col-span-2 space-y-2">
-              <label htmlFor="search" className="text-sm font-medium">
-                Buscar por nombre o DNI
-              </label>
-              <Input
-                id="search"
-                placeholder="Nombre o DNI..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                startContent={<Search className="w-4 h-4 text-zinc-500" />}
-              />
-            </div>
+      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+        <CardBody className="p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Input
+              placeholder="Buscar por nombre o DNI..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              startContent={
+                <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500" />
+              }
+              classNames={{
+                inputWrapper:
+                  "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
+              }}
+              className="sm:col-span-2"
+            />
 
-            <div className="space-y-2">
-              <label htmlFor="estado" className="text-sm font-medium">
-                Estado
-              </label>
-              <Select
-                id="estado"
-                placeholder="Selecciona estado"
-                selectedKeys={new Set([filterEstado])}
-                onSelectionChange={(keys) =>
-                  setFilterEstado(Array.from(keys)[0] as string)
-                }
-                aria-label="Estado"
-              >
-                <SelectItem key="todos">Todos</SelectItem>
-                <SelectItem key="activo">Activo</SelectItem>
-                <SelectItem key="suspendido">Suspendido</SelectItem>
-                <SelectItem key="cesado">Cesado</SelectItem>
-              </Select>
-            </div>
+            <Select
+              placeholder="Estado"
+              selectedKeys={
+                filterEstado !== "todos" ? new Set([filterEstado]) : new Set()
+              }
+              onSelectionChange={(keys) =>
+                setFilterEstado(
+                  Array.from(keys)[0]
+                    ? (Array.from(keys)[0] as string)
+                    : "todos",
+                )
+              }
+              aria-label="Estado"
+              classNames={{
+                trigger:
+                  "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
+              }}
+            >
+              <SelectItem key="activo">Activo</SelectItem>
+              <SelectItem key="suspendido">Suspendido</SelectItem>
+              <SelectItem key="cesado">Cesado</SelectItem>
+            </Select>
 
-            <div className="space-y-2">
-              <label htmlFor="departamento" className="text-sm font-medium">
-                Departamento
-              </label>
-              <Select
-                id="departamento"
-                placeholder="Selecciona departamento"
-                selectedKeys={new Set([filterDepartamento])}
-                onSelectionChange={(keys) =>
-                  setFilterDepartamento(Array.from(keys)[0] as string)
-                }
-                aria-label="Departamento"
-              >
-                <SelectItem key="todos">Todos</SelectItem>
-                <SelectItem key="Desarrollo">Desarrollo</SelectItem>
-                <SelectItem key="Diseño">Diseño</SelectItem>
-                <SelectItem key="Marketing">Marketing</SelectItem>
-                <SelectItem key="Ventas">Ventas</SelectItem>
-                <SelectItem key="Gestión">Gestión</SelectItem>
-              </Select>
-            </div>
+            <Select
+              placeholder="Departamento"
+              selectedKeys={
+                filterDepartamento !== "todos"
+                  ? new Set([filterDepartamento])
+                  : new Set()
+              }
+              onSelectionChange={(keys) =>
+                setFilterDepartamento(
+                  Array.from(keys)[0]
+                    ? (Array.from(keys)[0] as string)
+                    : "todos",
+                )
+              }
+              aria-label="Departamento"
+              classNames={{
+                trigger:
+                  "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
+              }}
+            >
+              <SelectItem key="Desarrollo">Desarrollo</SelectItem>
+              <SelectItem key="Diseño">Diseño</SelectItem>
+              <SelectItem key="Marketing">Marketing</SelectItem>
+              <SelectItem key="Ventas">Ventas</SelectItem>
+              <SelectItem key="Gestión">Gestión</SelectItem>
+            </Select>
           </div>
         </CardBody>
       </Card>
 
       {/* Acciones */}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-        <p className="text-zinc-600">
+        <p className="text-zinc-500 dark:text-zinc-400">
           Mostrando {filteredEmpleados.length} de {empleados.length} empleados
         </p>
         <div className="flex items-center gap-3">
@@ -228,7 +247,7 @@ export function PersonalPage() {
       </div>
 
       {/* Tabla */}
-      <Card>
+      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
         <CardBody className="p-6">
           <div className="overflow-x-auto">
             <Table aria-label="Tabla de personal" removeWrapper>

@@ -267,50 +267,52 @@ export function DmsPage() {
   return (
     <div className="space-y-6">
       {/* Filtros */}
-      <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Input
-            placeholder="Buscar formulario..."
-            value={searchTerm}
-            onValueChange={setSearchTerm}
-            startContent={
-              <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500" />
-            }
-            classNames={{
-              inputWrapper:
-                "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
-            }}
-          />
+      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+        <CardBody className="p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Input
+              placeholder="Buscar formulario..."
+              value={searchTerm}
+              onValueChange={setSearchTerm}
+              startContent={
+                <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500" />
+              }
+              classNames={{
+                inputWrapper:
+                  "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
+              }}
+            />
 
-          <Select
-            placeholder="Estado"
-            selectedKeys={filterStatus !== "todos" ? [filterStatus] : []}
-            onSelectionChange={(keys) => {
-              const value = Array.from(keys)[0] as string;
-              setFilterStatus(value || "todos");
-            }}
-            classNames={{
-              trigger:
-                "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
-            }}
-          >
-            <SelectItem key="published">Publicado</SelectItem>
-            <SelectItem key="draft">Borrador</SelectItem>
-            <SelectItem key="archived">Archivado</SelectItem>
-          </Select>
-
-          {hasFilters && (
-            <Button
-              variant="flat"
-              color="danger"
-              onPress={clearFilters}
-              className="sm:col-span-2 lg:col-span-1"
+            <Select
+              placeholder="Estado"
+              selectedKeys={filterStatus !== "todos" ? [filterStatus] : []}
+              onSelectionChange={(keys) => {
+                const value = Array.from(keys)[0] as string;
+                setFilterStatus(value || "todos");
+              }}
+              classNames={{
+                trigger:
+                  "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
+              }}
             >
-              Limpiar filtros
-            </Button>
-          )}
-        </div>
-      </div>
+              <SelectItem key="published">Publicado</SelectItem>
+              <SelectItem key="draft">Borrador</SelectItem>
+              <SelectItem key="archived">Archivado</SelectItem>
+            </Select>
+
+            {hasFilters && (
+              <Button
+                variant="flat"
+                color="danger"
+                onPress={clearFilters}
+                className="sm:col-span-2 lg:col-span-1"
+              >
+                Limpiar filtros
+              </Button>
+            )}
+          </div>
+        </CardBody>
+      </Card>
 
       {/* Header con acciones */}
       <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center sm:justify-between">
