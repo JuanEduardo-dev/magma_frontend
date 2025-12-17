@@ -21,6 +21,7 @@ import type { DynamicForm, FormStatus } from "../types";
 // Importar SurveyJS Creator con CSS (según documentación oficial)
 import "survey-core/survey-core.css";
 import "survey-creator-core/survey-creator-core.css";
+import { DefaultLight, DefaultDark } from "survey-core/themes";
 import { SurveyCreatorComponent, SurveyCreator } from "survey-creator-react";
 
 interface FormCreatorModalProps {
@@ -62,6 +63,10 @@ export function FormCreatorModal({
 
     // Configurar idioma y textos
     newCreator.locale = "es";
+
+    // Detectar y aplicar tema según dark mode
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    newCreator.theme = isDarkMode ? DefaultDark : DefaultLight;
 
     // Cargar schema existente si estamos editando
     if (editingForm) {

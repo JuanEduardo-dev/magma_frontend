@@ -15,6 +15,7 @@ import type { DynamicForm } from "../types";
 // Importar SurveyJS para renderizar con CSS (según documentación oficial)
 import "survey-core/survey-core.css";
 import { Model } from "survey-core";
+import { DefaultLight, DefaultDark } from "survey-core/themes";
 import { Survey } from "survey-react-ui";
 
 interface FormPreviewModalProps {
@@ -41,6 +42,10 @@ export function FormPreviewModal({
         model.showCompletedPage = true;
         model.completedHtml =
           "<div class='sv-completed-page'><h3>¡Gracias por completar el formulario!</h3><p>Tu respuesta ha sido registrada.</p></div>";
+
+        // Detectar y aplicar tema según dark mode
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        model.applyTheme(isDarkMode ? DefaultDark : DefaultLight);
 
         // Manejar envío
         model.onComplete.add((sender) => {
@@ -82,7 +87,7 @@ export function FormPreviewModal({
           </p>
         </ModalHeader>
         <ModalBody>
-          <div className="min-h-[400px] bg-zinc-50 dark:bg-zinc-900 rounded-lg p-4">
+          <div className="min-h-[400px]">
             {surveyModel ? (
               <Survey model={surveyModel} />
             ) : (
