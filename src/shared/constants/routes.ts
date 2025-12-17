@@ -9,6 +9,7 @@ export const ROUTES = {
   FORMS: "/forms",
   SCHEDULES: "/schedules",
   DMS: "/dms",
+  INVENTORY: "/inventory",
   CONFIGURATION: "/configuration",
   CONFIGURATION_ACCOUNT: "/configuration/account",
   CONFIGURATION_USERS: "/configuration/users",

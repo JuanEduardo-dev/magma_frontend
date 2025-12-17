@@ -14,36 +14,36 @@ import {
   Textarea,
 } from "@heroui/react";
 
-interface NuevaPeticionModalProps {
+interface NewRequestModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (data: Record<string, string>) => void;
 }
 
-const empleados = [
-  { id: "1", nombre: "Marco Mantilla", cargo: "Desarrollador Senior" },
-  { id: "2", nombre: "Sofía Martínez", cargo: "Diseñadora UX" },
-  { id: "3", nombre: "Valentina Gómez", cargo: "Project Manager" },
-  { id: "4", nombre: "Alejandro Vega", cargo: "Desarrollador Frontend" },
-  { id: "5", nombre: "Juan Pérez", cargo: "Desarrollador Backend" },
+const employees = [
+  { id: "1", name: "Marco Mantilla", position: "Desarrollador Senior" },
+  { id: "2", name: "Sofía Martínez", position: "Diseñadora UX" },
+  { id: "3", name: "Valentina Gómez", position: "Project Manager" },
+  { id: "4", name: "Alejandro Vega", position: "Desarrollador Frontend" },
+  { id: "5", name: "Juan Pérez", position: "Desarrollador Backend" },
 ];
 
-export function NuevaPeticionModal({
+export function NewRequestModal({
   isOpen,
   onClose,
   onSave,
-}: NuevaPeticionModalProps) {
+}: NewRequestModalProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
     const data: Record<string, string> = {
-      empleado: formData.get("empleado") as string,
-      tipo: formData.get("tipo") as string,
-      fechaInicio: formData.get("fechaInicio") as string,
-      fechaFin: formData.get("fechaFin") as string,
-      motivo: formData.get("motivo") as string,
-      observaciones: (formData.get("observaciones") as string) || "",
+      employee: formData.get("employee") as string,
+      type: formData.get("type") as string,
+      startDate: formData.get("startDate") as string,
+      endDate: formData.get("endDate") as string,
+      reason: formData.get("reason") as string,
+      notes: (formData.get("notes") as string) || "",
     };
 
     onSave(data);
@@ -64,19 +64,19 @@ export function NuevaPeticionModal({
           <ModalBody className="gap-5">
             {/* Seleccionar Empleado */}
             <div className="space-y-2">
-              <label htmlFor="empleado" className="text-sm font-medium">
+              <label htmlFor="employee" className="text-sm font-medium">
                 Empleado
               </label>
               <Select
-                id="empleado"
-                name="empleado"
+                id="employee"
+                name="employee"
                 placeholder="Selecciona un empleado"
                 aria-label="Empleado"
                 isRequired
               >
-                {empleados.map((emp) => (
+                {employees.map((emp) => (
                   <SelectItem key={emp.id}>
-                    {emp.nombre} - {emp.cargo}
+                    {emp.name} - {emp.position}
                   </SelectItem>
                 ))}
               </Select>
@@ -84,12 +84,12 @@ export function NuevaPeticionModal({
 
             {/* Tipo de petición */}
             <div className="space-y-2">
-              <label htmlFor="tipo" className="text-sm font-medium">
+              <label htmlFor="type" className="text-sm font-medium">
                 Tipo de petición
               </label>
               <Select
-                id="tipo"
-                name="tipo"
+                id="type"
+                name="type"
                 placeholder="Selecciona el tipo"
                 aria-label="Tipo de petición"
                 isRequired
@@ -104,32 +104,27 @@ export function NuevaPeticionModal({
             {/* Fechas */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label htmlFor="fechaInicio" className="text-sm font-medium">
+                <label htmlFor="startDate" className="text-sm font-medium">
                   Fecha de inicio
                 </label>
-                <Input
-                  id="fechaInicio"
-                  name="fechaInicio"
-                  type="date"
-                  isRequired
-                />
+                <Input id="startDate" name="startDate" type="date" isRequired />
               </div>
               <div className="space-y-2">
-                <label htmlFor="fechaFin" className="text-sm font-medium">
+                <label htmlFor="endDate" className="text-sm font-medium">
                   Fecha de fin
                 </label>
-                <Input id="fechaFin" name="fechaFin" type="date" isRequired />
+                <Input id="endDate" name="endDate" type="date" isRequired />
               </div>
             </div>
 
             {/* Motivo */}
             <div className="space-y-2">
-              <label htmlFor="motivo" className="text-sm font-medium">
+              <label htmlFor="reason" className="text-sm font-medium">
                 Motivo de la petición
               </label>
               <Textarea
-                id="motivo"
-                name="motivo"
+                id="reason"
+                name="reason"
                 placeholder="Describe el motivo de la petición..."
                 minRows={3}
                 isRequired
@@ -138,12 +133,12 @@ export function NuevaPeticionModal({
 
             {/* Observaciones */}
             <div className="space-y-2">
-              <label htmlFor="observaciones" className="text-sm font-medium">
+              <label htmlFor="notes" className="text-sm font-medium">
                 Observaciones adicionales
               </label>
               <Textarea
-                id="observaciones"
-                name="observaciones"
+                id="notes"
+                name="notes"
                 placeholder="Información adicional (opcional)..."
                 minRows={2}
               />
@@ -151,7 +146,7 @@ export function NuevaPeticionModal({
 
             {/* Adjuntar documentos */}
             <div className="space-y-2">
-              <label htmlFor="documentos" className="text-sm font-medium">
+              <label htmlFor="documents" className="text-sm font-medium">
                 Documentos adjuntos
               </label>
               <div className="border-2 border-dashed border-zinc-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors cursor-pointer">
@@ -163,8 +158,8 @@ export function NuevaPeticionModal({
                   PDF, JPG, PNG hasta 10MB
                 </p>
                 <input
-                  id="documentos"
-                  name="documentos"
+                  id="documents"
+                  name="documents"
                   type="file"
                   multiple
                   className="hidden"

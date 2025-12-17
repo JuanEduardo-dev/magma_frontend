@@ -13,17 +13,17 @@ import {
   SelectItem,
 } from "@heroui/react";
 
-interface NuevoEmpleadoModalProps {
+interface NewEmployeeModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (data: FormData) => void;
 }
 
-export function NuevoEmpleadoModal({
+export function NewEmployeeModal({
   isOpen,
   onClose,
   onSave,
-}: NuevoEmpleadoModalProps) {
+}: NewEmployeeModalProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);

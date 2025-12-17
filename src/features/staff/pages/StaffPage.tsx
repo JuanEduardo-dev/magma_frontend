@@ -26,60 +26,62 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/react";
-import type { Empleado, EstadoLaboral } from "../types";
-import { initialEmpleados } from "../data/mockData";
-import { NuevoEmpleadoModal } from "../components/NuevoEmpleadoModal";
-import { EmpleadoDetailPanel } from "../components/EmpleadoDetailPanel";
+import type { Employee, EmploymentStatus } from "../types";
+import { initialEmployees } from "../data/mockData";
+import { NewEmployeeModal } from "../components/NewEmployeeModal";
+import { EmployeeDetailPanel } from "../components/EmployeeDetailPanel";
 
-const estadoColorMap: Record<EstadoLaboral, "success" | "warning" | "default"> =
-  {
-    activo: "success",
-    suspendido: "warning",
-    cesado: "default",
-  };
-
-const estadoLabelMap: Record<EstadoLaboral, string> = {
-  activo: "Activo",
-  suspendido: "Suspendido",
-  cesado: "Cesado",
+const statusColorMap: Record<
+  EmploymentStatus,
+  "success" | "warning" | "default"
+> = {
+  active: "success",
+  suspended: "warning",
+  terminated: "default",
 };
 
-export function PersonalPage() {
-  const [empleados] = useState<Empleado[]>(initialEmpleados);
+const statusLabelMap: Record<EmploymentStatus, string> = {
+  active: "Activo",
+  suspended: "Suspendido",
+  terminated: "Cesado",
+};
+
+export function StaffPage() {
+  const [employees] = useState<Employee[]>(initialEmployees);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterEstado, setFilterEstado] = useState<string>("todos");
-  const [filterDepartamento, setFilterDepartamento] = useState<string>("todos");
-  const [isNewEmpleadoModalOpen, setIsNewEmpleadoModalOpen] = useState(false);
-  const [selectedEmpleado, setSelectedEmpleado] = useState<Empleado | null>(
+  const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [filterDepartment, setFilterDepartment] = useState<string>("all");
+  const [isNewEmployeeModalOpen, setIsNewEmployeeModalOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null,
   );
   const [isDetailPanelOpen, setIsDetailPanelOpen] = useState(false);
 
-  const handleViewDetail = (empleado: Empleado) => {
-    setSelectedEmpleado(empleado);
+  const handleViewDetail = (employee: Employee) => {
+    setSelectedEmployee(employee);
     setIsDetailPanelOpen(true);
   };
 
-  const filteredEmpleados = empleados.filter((emp) => {
+  const filteredEmployees = employees.filter((emp) => {
     const matchSearch =
-      emp.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      emp.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       emp.dni.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchEstado =
-      filterEstado === "todos" || emp.estadoLaboral === filterEstado;
-    const matchDepartamento =
-      filterDepartamento === "todos" || emp.departamento === filterDepartamento;
-    return matchSearch && matchEstado && matchDepartamento;
+    const matchStatus =
+      filterStatus === "all" || emp.employmentStatus === filterStatus;
+    const matchDepartment =
+      filterDepartment === "all" || emp.department === filterDepartment;
+    return matchSearch && matchStatus && matchDepartment;
   });
 
-  const renderCell = (empleado: Empleado, columnKey: React.Key) => {
+  const renderCell = (employee: Employee, columnKey: React.Key) => {
     switch (columnKey) {
-      case "foto":
+      case "photo":
         return (
           <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
-            {empleado.foto ? (
+            {employee.photo ? (
               <Image
-                src={empleado.foto}
-                alt={empleado.nombreCompleto}
+                src={employee.photo}
+                alt={employee.fullName}
                 width={40}
                 height={40}
                 className="object-cover"
@@ -89,51 +91,51 @@ export function PersonalPage() {
             )}
           </div>
         );
-      case "nombreCompleto":
+      case "fullName":
         return (
           <div>
             <p className="font-medium text-zinc-900 dark:text-zinc-100">
-              {empleado.nombreCompleto}
+              {employee.fullName}
             </p>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              {empleado.dni}
+              {employee.dni}
             </p>
           </div>
         );
-      case "cargo":
-        return empleado.cargo;
-      case "departamento":
-        return empleado.departamento;
+      case "position":
+        return employee.position;
+      case "department":
+        return employee.department;
       case "email":
         return (
           <span className="text-sm text-zinc-600 dark:text-zinc-400">
-            {empleado.email}
+            {employee.email}
           </span>
         );
-      case "telefono":
+      case "phone":
         return (
           <span className="text-sm text-zinc-600 dark:text-zinc-400">
-            {empleado.telefono}
+            {employee.phone}
           </span>
         );
-      case "estadoLaboral":
+      case "employmentStatus":
         return (
           <Chip
-            color={estadoColorMap[empleado.estadoLaboral]}
+            color={statusColorMap[employee.employmentStatus]}
             variant="flat"
             size="sm"
           >
-            {estadoLabelMap[empleado.estadoLaboral]}
+            {statusLabelMap[employee.employmentStatus]}
           </Chip>
         );
-      case "acciones":
+      case "actions":
         return (
           <div className="flex items-center gap-1">
             <Button
               isIconOnly
               size="sm"
               variant="light"
-              onPress={() => handleViewDetail(empleado)}
+              onPress={() => handleViewDetail(employee)}
               aria-label="Ver detalle"
             >
               <Eye className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -171,13 +173,11 @@ export function PersonalPage() {
             <Select
               placeholder="Estado"
               selectedKeys={
-                filterEstado !== "todos" ? new Set([filterEstado]) : new Set()
+                filterStatus !== "all" ? new Set([filterStatus]) : new Set()
               }
               onSelectionChange={(keys) =>
-                setFilterEstado(
-                  Array.from(keys)[0]
-                    ? (Array.from(keys)[0] as string)
-                    : "todos",
+                setFilterStatus(
+                  Array.from(keys)[0] ? (Array.from(keys)[0] as string) : "all",
                 )
               }
               aria-label="Estado"
@@ -186,23 +186,21 @@ export function PersonalPage() {
                   "bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800",
               }}
             >
-              <SelectItem key="activo">Activo</SelectItem>
-              <SelectItem key="suspendido">Suspendido</SelectItem>
-              <SelectItem key="cesado">Cesado</SelectItem>
+              <SelectItem key="active">Activo</SelectItem>
+              <SelectItem key="suspended">Suspendido</SelectItem>
+              <SelectItem key="terminated">Cesado</SelectItem>
             </Select>
 
             <Select
               placeholder="Departamento"
               selectedKeys={
-                filterDepartamento !== "todos"
-                  ? new Set([filterDepartamento])
+                filterDepartment !== "all"
+                  ? new Set([filterDepartment])
                   : new Set()
               }
               onSelectionChange={(keys) =>
-                setFilterDepartamento(
-                  Array.from(keys)[0]
-                    ? (Array.from(keys)[0] as string)
-                    : "todos",
+                setFilterDepartment(
+                  Array.from(keys)[0] ? (Array.from(keys)[0] as string) : "all",
                 )
               }
               aria-label="Departamento"
@@ -224,7 +222,7 @@ export function PersonalPage() {
       {/* Acciones */}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
         <p className="text-zinc-500 dark:text-zinc-400">
-          Mostrando {filteredEmpleados.length} de {empleados.length} empleados
+          Mostrando {filteredEmployees.length} de {employees.length} empleados
         </p>
         <div className="flex items-center gap-3">
           <Button
@@ -237,7 +235,7 @@ export function PersonalPage() {
           </Button>
           <Button
             color="primary"
-            onPress={() => setIsNewEmpleadoModalOpen(true)}
+            onPress={() => setIsNewEmployeeModalOpen(true)}
             startContent={<Plus className="w-4 h-4" />}
             className="flex-1 sm:flex-none"
           >
@@ -252,20 +250,20 @@ export function PersonalPage() {
           <div className="overflow-x-auto">
             <Table aria-label="Tabla de personal" removeWrapper>
               <TableHeader>
-                <TableColumn key="foto">FOTO</TableColumn>
-                <TableColumn key="nombreCompleto">NOMBRE COMPLETO</TableColumn>
-                <TableColumn key="cargo">CARGO</TableColumn>
-                <TableColumn key="departamento">DEPARTAMENTO</TableColumn>
+                <TableColumn key="photo">FOTO</TableColumn>
+                <TableColumn key="fullName">NOMBRE COMPLETO</TableColumn>
+                <TableColumn key="position">CARGO</TableColumn>
+                <TableColumn key="department">DEPARTAMENTO</TableColumn>
                 <TableColumn key="email">EMAIL</TableColumn>
-                <TableColumn key="telefono">TELÉFONO</TableColumn>
-                <TableColumn key="estadoLaboral">ESTADO LABORAL</TableColumn>
-                <TableColumn key="acciones">ACCIONES</TableColumn>
+                <TableColumn key="phone">TELÉFONO</TableColumn>
+                <TableColumn key="employmentStatus">ESTADO LABORAL</TableColumn>
+                <TableColumn key="actions">ACCIONES</TableColumn>
               </TableHeader>
-              <TableBody items={filteredEmpleados}>
-                {(empleado) => (
-                  <TableRow key={empleado.id}>
+              <TableBody items={filteredEmployees}>
+                {(employee) => (
+                  <TableRow key={employee.id}>
                     {(columnKey) => (
-                      <TableCell>{renderCell(empleado, columnKey)}</TableCell>
+                      <TableCell>{renderCell(employee, columnKey)}</TableCell>
                     )}
                   </TableRow>
                 )}
@@ -275,16 +273,16 @@ export function PersonalPage() {
         </CardBody>
       </Card>
 
-      <NuevoEmpleadoModal
-        isOpen={isNewEmpleadoModalOpen}
-        onClose={() => setIsNewEmpleadoModalOpen(false)}
+      <NewEmployeeModal
+        isOpen={isNewEmployeeModalOpen}
+        onClose={() => setIsNewEmployeeModalOpen(false)}
         onSave={() => {}}
       />
 
-      <EmpleadoDetailPanel
+      <EmployeeDetailPanel
         isOpen={isDetailPanelOpen}
         onClose={() => setIsDetailPanelOpen(false)}
-        empleado={selectedEmpleado}
+        employee={selectedEmployee}
       />
     </div>
   );

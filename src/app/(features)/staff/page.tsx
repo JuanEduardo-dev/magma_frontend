@@ -1,10 +1,10 @@
 import { MainLayout } from "@/shared/layouts/MainLayout";
-import { PersonalPage } from "@/features/staff";
+import { StaffPage } from "@/features/staff";
 
-export default function PersonalRoute() {
+export default function StaffRoute() {
   return (
     <MainLayout title="Personal">
-      <PersonalPage />
+      <StaffPage />
     </MainLayout>
   );
 }

@@ -1,4 +1,4 @@
-export * from "./pages/PersonalPage";
-export * from "./components/NuevoEmpleadoModal";
-export * from "./components/EmpleadoDetailPanel";
+export * from "./pages/StaffPage";
+export * from "./components/NewEmployeeModal";
+export * from "./components/EmployeeDetailPanel";
 export * from "./types";

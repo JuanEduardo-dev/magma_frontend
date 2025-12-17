@@ -13,32 +13,46 @@ import {
   FileText,
 } from "lucide-react";
 import { Button } from "@heroui/react";
-import type { Peticion } from "../types";
+import type { Request, RequestStatus } from "../types";
 
-interface PeticionDetailPanelProps {
+interface RequestDetailPanelProps {
   isOpen: boolean;
   onClose: () => void;
-  peticion: Peticion | null;
+  request: Request | null;
 }
 
-export function PeticionDetailPanel({
+const statusLabelMap: Record<RequestStatus, string> = {
+  pending: "Pendiente",
+  approved: "Aprobado",
+  rejected: "Rechazado",
+  in_progress: "En proceso",
+};
+
+export function RequestDetailPanel({
   isOpen,
   onClose,
-  peticion,
-}: PeticionDetailPanelProps) {
-  if (!isOpen || !peticion) return null;
+  request,
+}: RequestDetailPanelProps) {
+  if (!isOpen || !request) return null;
 
-  const getEstadoColor = (estado: string) => {
-    const colors = {
-      pendiente: "text-yellow-600 dark:text-yellow-400",
-      aprobado: "text-green-600 dark:text-green-400",
-      rechazado: "text-red-600 dark:text-red-400",
-      proceso: "text-blue-600 dark:text-blue-400",
+  const getStatusColor = (status: RequestStatus) => {
+    const colors: Record<RequestStatus, string> = {
+      pending: "text-yellow-600 dark:text-yellow-400",
+      approved: "text-green-600 dark:text-green-400",
+      rejected: "text-red-600 dark:text-red-400",
+      in_progress: "text-blue-600 dark:text-blue-400",
     };
-    return (
-      colors[estado as keyof typeof colors] ||
-      "text-zinc-900 dark:text-zinc-100"
-    );
+    return colors[status] || "text-zinc-900 dark:text-zinc-100";
+  };
+
+  const getStatusDotColor = (status: RequestStatus) => {
+    const colors: Record<RequestStatus, string> = {
+      pending: "bg-yellow-600",
+      approved: "bg-green-600",
+      rejected: "bg-red-600",
+      in_progress: "bg-blue-600",
+    };
+    return colors[status] || "bg-zinc-400";
   };
 
   return (
@@ -48,7 +62,6 @@ export function PeticionDetailPanel({
         type="button"
         className="fixed inset-0 h-screen w-screen bg-black/30 dark:bg-black/60 z-40 transition-opacity cursor-default"
         onClick={onClose}
-        onKeyDown={(e) => e.key === "Escape" && onClose()}
         aria-label="Cerrar panel"
       />
 
@@ -79,10 +92,10 @@ export function PeticionDetailPanel({
               </div>
               <div>
                 <p className="text-zinc-900 dark:text-zinc-100 font-medium">
-                  {peticion.empleado}
+                  {request.employee}
                 </p>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-                  {peticion.cargo}
+                  {request.position}
                 </p>
               </div>
             </div>
@@ -97,7 +110,7 @@ export function PeticionDetailPanel({
                   Tipo de petición
                 </p>
                 <p className="text-zinc-900 dark:text-zinc-100 font-medium capitalize">
-                  {peticion.tipo}
+                  {request.type}
                 </p>
               </div>
             </div>
@@ -109,7 +122,7 @@ export function PeticionDetailPanel({
                   Periodo
                 </p>
                 <p className="text-zinc-900 dark:text-zinc-100 font-medium">
-                  {peticion.fechaInicio} - {peticion.fechaFin}
+                  {request.startDate} - {request.endDate}
                 </p>
               </div>
             </div>
@@ -121,7 +134,7 @@ export function PeticionDetailPanel({
                   Duración
                 </p>
                 <p className="text-zinc-900 dark:text-zinc-100 font-medium">
-                  {peticion.duracion}
+                  {request.duration}
                 </p>
               </div>
             </div>
@@ -132,9 +145,7 @@ export function PeticionDetailPanel({
             <p className="text-zinc-500 dark:text-zinc-400 text-xs font-medium">
               Motivo
             </p>
-            <p className="text-zinc-900 dark:text-zinc-100">
-              {peticion.motivo}
-            </p>
+            <p className="text-zinc-900 dark:text-zinc-100">{request.reason}</p>
           </div>
 
           {/* Estado */}
@@ -144,20 +155,12 @@ export function PeticionDetailPanel({
             </p>
             <div className="flex items-center gap-2">
               <div
-                className={`w-2 h-2 rounded-full ${
-                  peticion.estado === "aprobado"
-                    ? "bg-green-600"
-                    : peticion.estado === "rechazado"
-                      ? "bg-red-600"
-                      : peticion.estado === "proceso"
-                        ? "bg-blue-600"
-                        : "bg-yellow-600"
-                }`}
+                className={`w-2 h-2 rounded-full ${getStatusDotColor(request.status)}`}
               />
               <span
-                className={`capitalize font-medium ${getEstadoColor(peticion.estado)}`}
+                className={`capitalize font-medium ${getStatusColor(request.status)}`}
               >
-                {peticion.estado === "proceso" ? "En proceso" : peticion.estado}
+                {statusLabelMap[request.status]}
               </span>
             </div>
           </div>
@@ -175,20 +178,20 @@ export function PeticionDetailPanel({
                     Solicitud creada
                   </p>
                   <p className="text-zinc-500 dark:text-zinc-400 text-xs">
-                    {peticion.fechaCreacion}
+                    {request.createdAt}
                   </p>
                 </div>
               </div>
-              {peticion.estado !== "pendiente" && (
+              {request.status !== "pending" && (
                 <div className="flex items-center gap-3">
-                  {peticion.estado === "rechazado" ? (
+                  {request.status === "rejected" ? (
                     <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
                   ) : (
                     <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                   )}
                   <div>
                     <p className="text-zinc-900 dark:text-zinc-100 text-sm">
-                      {peticion.estado === "rechazado"
+                      {request.status === "rejected"
                         ? "Rechazada"
                         : "Aprobada por supervisor"}
                     </p>
@@ -202,15 +205,15 @@ export function PeticionDetailPanel({
           </div>
 
           {/* Documentos adjuntos */}
-          {peticion.adjuntos > 0 && (
+          {request.attachments > 0 && (
             <div className="space-y-3">
               <p className="text-zinc-500 dark:text-zinc-400 text-xs font-medium">
                 Documentos adjuntos
               </p>
               <div className="space-y-2">
-                {Array.from({ length: peticion.adjuntos }, (_, idx) => (
+                {Array.from({ length: request.attachments }, (_, idx) => (
                   <div
-                    key={`${peticion.id}-adjunto-${idx + 1}`}
+                    key={`${request.id}-attachment-${idx + 1}`}
                     className="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-800 rounded-lg"
                   >
                     <div className="flex items-center gap-3">
@@ -229,14 +232,14 @@ export function PeticionDetailPanel({
           )}
 
           {/* Observaciones */}
-          {peticion.observaciones && (
+          {request.notes && (
             <div className="space-y-2">
               <p className="text-zinc-500 dark:text-zinc-400 text-xs font-medium">
                 Observaciones
               </p>
               <div className="p-4 bg-zinc-50 dark:bg-zinc-800 rounded-lg">
                 <p className="text-zinc-900 dark:text-zinc-100 text-sm">
-                  {peticion.observaciones}
+                  {request.notes}
                 </p>
               </div>
             </div>
@@ -248,7 +251,7 @@ export function PeticionDetailPanel({
               Acciones
             </p>
             <div className="flex flex-col gap-2">
-              {peticion.estado === "pendiente" && (
+              {request.status === "pending" && (
                 <>
                   <Button
                     color="success"
@@ -274,7 +277,7 @@ export function PeticionDetailPanel({
               >
                 Editar petición
               </Button>
-              {peticion.adjuntos > 0 && (
+              {request.attachments > 0 && (
                 <Button
                   variant="bordered"
                   className="w-full"

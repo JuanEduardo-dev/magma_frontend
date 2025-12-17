@@ -1,10 +1,10 @@
-import { PeticionesPage } from "@/features/requests";
+import { RequestsPage } from "@/features/requests";
 import { MainLayout } from "@/shared/layouts/MainLayout";
 
-export default function PeticionesRoute() {
+export default function RequestsRoute() {
   return (
     <MainLayout title="Peticiones">
-      <PeticionesPage />
+      <RequestsPage />
     </MainLayout>
   );
 }

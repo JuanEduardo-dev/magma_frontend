@@ -27,114 +27,112 @@ import {
   TableCell,
 } from "@heroui/react";
 import { MetricsCard } from "../components/MetricsCard";
-import { PeticionesFilters } from "../components/PeticionesFilters";
-import { PeticionDetailPanel } from "../components/PeticionDetailPanel";
-import { NuevaPeticionModal } from "../components/NuevaPeticionModal";
-import { initialPeticiones } from "../data/mockData";
-import type { Peticion } from "../types";
+import { RequestsFilters } from "../components/RequestsFilters";
+import { RequestDetailPanel } from "../components/RequestDetailPanel";
+import { NewRequestModal } from "../components/NewRequestModal";
+import { initialRequests } from "../data/mockData";
+import type { Request, RequestStatus } from "../types";
 
-const estadoColorMap: Record<
-  string,
+const statusColorMap: Record<
+  RequestStatus,
   "warning" | "success" | "danger" | "primary"
 > = {
-  pendiente: "warning",
-  aprobado: "success",
-  rechazado: "danger",
-  proceso: "primary",
+  pending: "warning",
+  approved: "success",
+  rejected: "danger",
+  in_progress: "primary",
 };
 
-export function PeticionesPage() {
-  const [peticiones] = useState<Peticion[]>(initialPeticiones);
-  const [selectedPeticion, setSelectedPeticion] = useState<Peticion | null>(
-    null,
-  );
+const statusLabelMap: Record<RequestStatus, string> = {
+  pending: "Pendiente",
+  approved: "Aprobado",
+  rejected: "Rechazado",
+  in_progress: "En proceso",
+};
+
+export function RequestsPage() {
+  const [requests] = useState<Request[]>(initialRequests);
+  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleViewDetails = (peticion: Peticion) => {
-    setSelectedPeticion(peticion);
+  const handleViewDetails = (request: Request) => {
+    setSelectedRequest(request);
     setIsDetailOpen(true);
   };
 
   const handleCloseDetail = () => {
     setIsDetailOpen(false);
-    setSelectedPeticion(null);
+    setSelectedRequest(null);
   };
 
-  const handleSavePeticion = (data: Record<string, string>) => {
+  const handleSaveRequest = (data: Record<string, string>) => {
     console.log("Nueva petición:", data);
-    // Aquí se implementaría la lógica para guardar
   };
 
   const handleApplyFilters = (filters: Record<string, string>) => {
     console.log("Aplicar filtros:", filters);
-    // Aquí se implementaría la lógica de filtrado
   };
 
   const handleClearFilters = () => {
     console.log("Limpiar filtros");
-    // Aquí se implementaría la lógica para limpiar filtros
   };
 
-  const renderCell = (peticion: Peticion, columnKey: React.Key) => {
+  const renderCell = (request: Request, columnKey: React.Key) => {
     switch (columnKey) {
-      case "empleado":
+      case "employee":
         return (
           <div>
-            <p className="font-medium">{peticion.empleado}</p>
+            <p className="font-medium">{request.employee}</p>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              {peticion.cargo}
+              {request.position}
             </p>
           </div>
         );
-      case "tipo":
-        return <span className="text-sm capitalize">{peticion.tipo}</span>;
-      case "motivo":
+      case "type":
+        return <span className="text-sm capitalize">{request.type}</span>;
+      case "reason":
         return (
           <p className="text-sm text-zinc-600 dark:text-zinc-400 truncate max-w-[200px]">
-            {peticion.motivo}
+            {request.reason}
           </p>
         );
-      case "estado":
+      case "status":
         return (
-          <Chip
-            color={estadoColorMap[peticion.estado]}
-            variant="flat"
-            size="sm"
-          >
-            {peticion.estado === "proceso" ? "En proceso" : peticion.estado}
+          <Chip color={statusColorMap[request.status]} variant="flat" size="sm">
+            {statusLabelMap[request.status]}
           </Chip>
         );
-      case "fechaCreacion":
-        return <span className="text-sm">{peticion.fechaCreacion}</span>;
-      case "fechaInicio":
-        return <span className="text-sm">{peticion.fechaInicio}</span>;
-      case "fechaFin":
-        return <span className="text-sm">{peticion.fechaFin}</span>;
-      case "duracion":
-        return <span className="text-sm">{peticion.duracion}</span>;
-      case "adjuntos":
-        return peticion.adjuntos > 0 ? (
+      case "createdAt":
+        return <span className="text-sm">{request.createdAt}</span>;
+      case "startDate":
+        return <span className="text-sm">{request.startDate}</span>;
+      case "endDate":
+        return <span className="text-sm">{request.endDate}</span>;
+      case "duration":
+        return <span className="text-sm">{request.duration}</span>;
+      case "attachments":
+        return request.attachments > 0 ? (
           <div className="flex items-center justify-center gap-1">
             <Paperclip className="w-4 h-4 text-blue-600" />
-            <span className="text-xs">{peticion.adjuntos}</span>
+            <span className="text-xs">{request.attachments}</span>
           </div>
         ) : (
           <span className="text-zinc-400">-</span>
         );
-      case "acciones":
+      case "actions":
         return (
           <div className="flex items-center justify-end gap-1">
             <Button
               isIconOnly
               size="sm"
               variant="light"
-              onPress={() => handleViewDetails(peticion)}
+              onPress={() => handleViewDetails(request)}
               aria-label="Ver detalles"
             >
               <Eye className="w-4 h-4 text-blue-600" />
             </Button>
-            {peticion.estado === "pendiente" && (
+            {request.status === "pending" && (
               <>
                 <Button
                   isIconOnly
@@ -192,7 +190,7 @@ export function PeticionesPage() {
       </div>
 
       {/* Filtros */}
-      <PeticionesFilters
+      <RequestsFilters
         onApplyFilters={handleApplyFilters}
         onClearFilters={handleClearFilters}
       />
@@ -225,29 +223,29 @@ export function PeticionesPage() {
           <div className="overflow-x-auto">
             <Table aria-label="Tabla de peticiones" removeWrapper>
               <TableHeader>
-                <TableColumn key="empleado">EMPLEADO</TableColumn>
-                <TableColumn key="tipo">TIPO</TableColumn>
-                <TableColumn key="motivo">MOTIVO</TableColumn>
-                <TableColumn key="estado">ESTADO</TableColumn>
-                <TableColumn key="fechaCreacion">FECHA CREACIÓN</TableColumn>
-                <TableColumn key="fechaInicio">FECHA INICIO</TableColumn>
-                <TableColumn key="fechaFin">FECHA FIN</TableColumn>
-                <TableColumn key="duracion">DURACIÓN</TableColumn>
-                <TableColumn key="adjuntos" align="center">
+                <TableColumn key="employee">EMPLEADO</TableColumn>
+                <TableColumn key="type">TIPO</TableColumn>
+                <TableColumn key="reason">MOTIVO</TableColumn>
+                <TableColumn key="status">ESTADO</TableColumn>
+                <TableColumn key="createdAt">FECHA CREACIÓN</TableColumn>
+                <TableColumn key="startDate">FECHA INICIO</TableColumn>
+                <TableColumn key="endDate">FECHA FIN</TableColumn>
+                <TableColumn key="duration">DURACIÓN</TableColumn>
+                <TableColumn key="attachments" align="center">
                   ADJUNTOS
                 </TableColumn>
-                <TableColumn key="acciones" align="end">
+                <TableColumn key="actions" align="end">
                   ACCIONES
                 </TableColumn>
               </TableHeader>
-              <TableBody items={peticiones}>
-                {(peticion) => (
+              <TableBody items={requests}>
+                {(request) => (
                   <TableRow
-                    key={peticion.id}
+                    key={request.id}
                     className="hover:bg-zinc-50 dark:hover:bg-zinc-800"
                   >
                     {(columnKey) => (
-                      <TableCell>{renderCell(peticion, columnKey)}</TableCell>
+                      <TableCell>{renderCell(request, columnKey)}</TableCell>
                     )}
                   </TableRow>
                 )}
@@ -258,17 +256,17 @@ export function PeticionesPage() {
       </Card>
 
       {/* Panel de detalles */}
-      <PeticionDetailPanel
+      <RequestDetailPanel
         isOpen={isDetailOpen}
         onClose={handleCloseDetail}
-        peticion={selectedPeticion}
+        request={selectedRequest}
       />
 
       {/* Modal nueva petición */}
-      <NuevaPeticionModal
+      <NewRequestModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSave={handleSavePeticion}
+        onSave={handleSaveRequest}
       />
     </div>
   );

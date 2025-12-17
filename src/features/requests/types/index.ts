@@ -1,23 +1,23 @@
-export interface Peticion {
+export type RequestStatus = "pending" | "approved" | "rejected" | "in_progress";
+
+export interface Request {
   id: string;
-  empleado: string;
-  cargo: string;
-  tipo: string;
-  motivo: string;
-  estado: "pendiente" | "aprobado" | "rechazado" | "proceso";
-  fechaCreacion: string;
-  fechaInicio: string;
-  fechaFin: string;
-  duracion: string;
-  adjuntos: number;
-  observaciones?: string;
+  employee: string;
+  position: string;
+  type: string;
+  reason: string;
+  status: RequestStatus;
+  createdAt: string;
+  startDate: string;
+  endDate: string;
+  duration: string;
+  attachments: number;
+  notes?: string;
 }
 
-export type PeticionEstado = Peticion["estado"];
-
-export interface PeticionesMetrics {
-  pendientes: number;
-  aprobadas: number;
-  rechazadas: number;
-  enProceso: number;
+export interface RequestMetrics {
+  pending: number;
+  approved: number;
+  rejected: number;
+  inProgress: number;
 }

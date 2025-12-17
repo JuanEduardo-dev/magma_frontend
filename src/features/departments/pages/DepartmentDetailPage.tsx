@@ -85,7 +85,7 @@ export function DepartmentDetailPage({
 
       {/* Members Table */}
       <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
-        <CardBody className="p-0">
+        <CardBody className="p-6">
           <div className="overflow-x-auto">
             <Table
               removeWrapper

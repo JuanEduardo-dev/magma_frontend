@@ -15,6 +15,7 @@ import {
   Shield,
   Cog,
   ChevronDown,
+  Boxes,
   //X
 } from "lucide-react";
 import { Logo } from "./Logo";
@@ -101,6 +102,12 @@ export function Sidebar({
           label: "DMS / Formulario",
           icon: FolderOpen,
           href: ROUTES.DMS,
+        },
+        {
+          id: "inventory",
+          label: "Inventario / Activos",
+          icon: Boxes,
+          href: ROUTES.INVENTORY,
         },
       ],
     },

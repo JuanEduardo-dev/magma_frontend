@@ -1,14 +1,14 @@
-export type EstadoLaboral = "activo" | "suspendido" | "cesado";
+export type EmploymentStatus = "active" | "suspended" | "terminated";
 
-export interface Empleado {
+export interface Employee {
   id: string;
-  foto?: string;
-  nombreCompleto: string;
-  cargo: string;
-  departamento: string;
+  photo?: string;
+  fullName: string;
+  position: string;
+  department: string;
   email: string;
-  telefono: string;
-  estadoLaboral: EstadoLaboral;
+  phone: string;
+  employmentStatus: EmploymentStatus;
   dni: string;
-  fechaIngreso: string;
+  hireDate: string;
 }

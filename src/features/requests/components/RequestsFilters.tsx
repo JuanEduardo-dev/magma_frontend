@@ -11,15 +11,15 @@ import {
   DatePicker,
 } from "@heroui/react";
 
-interface PeticionesFiltersProps {
+interface RequestsFiltersProps {
   onApplyFilters: (filters: Record<string, string>) => void;
   onClearFilters: () => void;
 }
 
-export function PeticionesFilters({
+export function RequestsFilters({
   onApplyFilters,
   onClearFilters,
-}: PeticionesFiltersProps) {
+}: RequestsFiltersProps) {
   return (
     <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 mb-6">
       <CardBody className="p-6">
@@ -27,13 +27,13 @@ export function PeticionesFilters({
           {/* Buscar por empleado */}
           <div className="space-y-2">
             <label
-              htmlFor="search-empleado"
+              htmlFor="search-employee"
               className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
             >
               Buscar empleado
             </label>
             <Input
-              id="search-empleado"
+              id="search-employee"
               placeholder="Nombre del empleado"
               startContent={
                 <Search className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
@@ -44,13 +44,13 @@ export function PeticionesFilters({
           {/* Estado */}
           <div className="space-y-2">
             <label
-              htmlFor="estado"
+              htmlFor="status"
               className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
             >
               Estado
             </label>
             <Select
-              id="estado"
+              id="status"
               placeholder="Todos los estados"
               aria-label="Estado"
               classNames={{
@@ -68,13 +68,13 @@ export function PeticionesFilters({
           {/* Tipo de petición */}
           <div className="space-y-2">
             <label
-              htmlFor="tipo"
+              htmlFor="type"
               className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
             >
               Tipo de petición
             </label>
             <Select
-              id="tipo"
+              id="type"
               placeholder="Todos los tipos"
               aria-label="Tipo de petición"
               classNames={{
@@ -92,13 +92,13 @@ export function PeticionesFilters({
           {/* Departamento */}
           <div className="space-y-2">
             <label
-              htmlFor="departamento"
+              htmlFor="department"
               className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
             >
               Departamento
             </label>
             <Select
-              id="departamento"
+              id="department"
               placeholder="Todos los departamentos"
               aria-label="Departamento"
               classNames={{
@@ -119,7 +119,7 @@ export function PeticionesFilters({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           <div className="space-y-2">
             <label
-              htmlFor="fecha-inicio"
+              htmlFor="start-date"
               className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
             >
               Fecha de inicio
@@ -128,7 +128,7 @@ export function PeticionesFilters({
           </div>
           <div className="space-y-2">
             <label
-              htmlFor="fecha-fin"
+              htmlFor="end-date"
               className="text-sm font-medium text-zinc-900 dark:text-zinc-100"
             >
               Fecha de fin
