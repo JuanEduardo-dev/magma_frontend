@@ -82,7 +82,7 @@ export function RolesManagementPage() {
       <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-none">
         <CardBody className="p-0">
           <div className="overflow-x-auto">
-            <Table removeWrapper aria-label="Tabla de cargos">
+            <Table aria-label="Tabla de cargos">
               <TableHeader>
                 <TableColumn>Nombre del cargo</TableColumn>
                 <TableColumn align="end">Acciones</TableColumn>
