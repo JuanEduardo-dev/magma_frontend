@@ -229,9 +229,9 @@ export function PersonalPage() {
 
       {/* Tabla */}
       <Card>
-        <CardBody>
+        <CardBody className="p-6">
           <div className="overflow-x-auto">
-            <Table aria-label="Tabla de personal">
+            <Table aria-label="Tabla de personal" removeWrapper>
               <TableHeader>
                 <TableColumn key="foto">FOTO</TableColumn>
                 <TableColumn key="nombreCompleto">NOMBRE COMPLETO</TableColumn>

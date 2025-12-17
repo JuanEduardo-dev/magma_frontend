@@ -15,7 +15,7 @@ import {
   Shield,
   Cog,
   ChevronDown,
-  X,
+  //X
 } from "lucide-react";
 import { Logo } from "./Logo";
 import { ROUTES } from "@/shared/constants/routes";
