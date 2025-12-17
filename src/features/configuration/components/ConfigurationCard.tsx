@@ -1,18 +1,23 @@
 "use client";
 
 import { Card, CardBody } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import type { ConfigurationOption } from "../types";
+import { useRouter } from "next/navigation";
+import type { ReactElement } from "react";
 
 interface ConfigurationCardProps {
-  option: ConfigurationOption;
+  option: {
+    id: string;
+    title: string;
+    description: string;
+    icon: string | ReactElement;
+    href: string;
+  };
 }
 
 export function ConfigurationCard({ option }: ConfigurationCardProps) {
   const router = useRouter();
-  const iconSrc =
-    typeof option.icon === "string" ? option.icon : option.icon.src;
+  const isReactElement = typeof option.icon !== "string";
 
   return (
     <Card
@@ -25,17 +30,19 @@ export function ConfigurationCard({ option }: ConfigurationCardProps) {
           {/* Left - Icon */}
           <div className="shrink-0">
             <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Image
-                src={iconSrc}
-                alt={option.title}
-                width={28}
-                height={28}
-                className="text-primary"
-                style={{
-                  filter:
-                    "invert(24%) sepia(89%) saturate(3571%) hue-rotate(351deg) brightness(95%) contrast(92%)",
-                }}
-              />
+              {isReactElement ? (
+                option.icon
+              ) : (
+                <Image
+                  src={typeof option.icon === "string" ? option.icon : ""}
+                  alt={option.title}
+                  width={28}
+                  height={28}
+                  className="text-primary"
+                  loading="eager"
+                  decoding="sync"
+                />
+              )}
             </div>
           </div>
 

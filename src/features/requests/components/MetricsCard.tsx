@@ -14,7 +14,10 @@ interface MetricsCardProps {
 
 export function MetricsCard({ title, value, icon, trend }: MetricsCardProps) {
   return (
-    <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+    <Card
+      className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
+      shadow="none"
+    >
       <CardBody className="flex flex-col gap-3 p-6">
         <div className="flex items-start justify-between">
           <p className="text-sm text-zinc-600 dark:text-zinc-400">{title}</p>

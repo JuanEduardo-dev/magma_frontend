@@ -198,7 +198,10 @@ export function FormsPage() {
       </div>
 
       {/* Tabla */}
-      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+      <Card
+        className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
+        shadow="none"
+      >
         <CardBody className="p-6">
           <div className="mb-4">
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">

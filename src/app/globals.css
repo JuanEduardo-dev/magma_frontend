@@ -52,6 +52,16 @@ body {
   padding: 0;
 }
 
+/* Prevenir flash de tema durante navegación */
+html {
+  background: var(--background);
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;

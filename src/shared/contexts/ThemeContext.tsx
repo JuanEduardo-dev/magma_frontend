@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -12,15 +12,19 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Solo en cliente
+    if (typeof window !== "undefined") {
+      return (localStorage.getItem("theme") as Theme) || "light";
     }
-  }, []);
+    return "light";
+  });
+
+  useLayoutEffect(() => {
+    // Sincronizar con el DOM en caso de que el script de bloqueo no se haya ejecutado
+    const isDark = theme === "dark";
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [theme]);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";

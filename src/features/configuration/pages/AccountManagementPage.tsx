@@ -17,7 +17,10 @@ export default function AccountManagementPage() {
       </Breadcrumbs>
 
       {/* Card con Tabs */}
-      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+      <Card
+        className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
+        shadow="none"
+      >
         <CardBody className="p-6">
           {/* Tabs Header */}
           <div className="flex gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-6">

@@ -267,7 +267,10 @@ export function DmsPage() {
   return (
     <div className="space-y-6">
       {/* Filtros */}
-      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+      <Card
+        className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
+        shadow="none"
+      >
         <CardBody className="p-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Input
@@ -339,7 +342,10 @@ export function DmsPage() {
       </div>
 
       {/* Tabla */}
-      <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
+      <Card
+        className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
+        shadow="none"
+      >
         <CardBody className="p-0">
           <div className="overflow-x-auto">
             <Table

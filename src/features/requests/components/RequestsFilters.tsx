@@ -21,7 +21,10 @@ export function RequestsFilters({
   onClearFilters,
 }: RequestsFiltersProps) {
   return (
-    <Card className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 mb-6">
+    <Card
+      className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 mb-6"
+      shadow="none"
+    >
       <CardBody className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           {/* Buscar por empleado */}
