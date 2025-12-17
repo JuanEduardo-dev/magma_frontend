@@ -96,7 +96,12 @@ export function Sidebar({
           href: "#",
         },
         { id: "fidelidad", label: "Fidelidad", icon: Gift, href: "#" },
-        { id: "dms", label: "DMS / Formulario", icon: FolderOpen, href: "#" },
+        {
+          id: "dms",
+          label: "DMS / Formulario",
+          icon: FolderOpen,
+          href: ROUTES.DMS,
+        },
       ],
     },
     {
