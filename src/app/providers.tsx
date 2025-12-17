@@ -2,7 +2,7 @@
 
 import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ThemeProvider } from "@/shared/contexts/ThemeContext";
+import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/features/auth";
 import { useState } from "react";
 
@@ -23,9 +23,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <HeroUIProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </HeroUIProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <HeroUIProvider>{children}</HeroUIProvider>
+        </ThemeProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@heroui/react";
 import { Search, Bell, Sun, Moon, Menu } from "lucide-react";
-import { useTheme } from "@/shared/contexts/ThemeContext";
+import { useTheme } from "next-themes";
 import { UserDropdown } from "./UserDropdown";
 import { ChangeCompanyModal } from "./ChangeCompanyModal";
 
@@ -20,8 +20,14 @@ export function TopBar({
   userRole = "Software Engineer",
   onMenuClick,
 }: TopBarProps) {
-  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
+
+  // Evitar error de hidratación
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="bg-zinc-50 dark:bg-zinc-900 px-4 lg:px-6 py-4">
@@ -61,10 +67,12 @@ export function TopBar({
           <button
             type="button"
             className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
-            onClick={toggleTheme}
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
             aria-label="Cambiar tema"
           >
-            {theme === "light" ? (
+            {!mounted ? (
+              <div className="w-5 h-5" />
+            ) : theme === "light" ? (
               <Moon className="w-5 h-5 text-zinc-700" />
             ) : (
               <Sun className="w-5 h-5 text-zinc-300" />
