@@ -15,13 +15,10 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await login({ email, password });
-      // Redirigir a peticiones después del login exitoso
-      window.location.href = ROUTES.REQUESTS;
-    } catch (err) {
-      console.error("Login error:", err);
-    }
+    // Login sin validación - acepta cualquier credencial
+    await login({ email, password });
+    // Redirigir a peticiones después del login
+    window.location.href = ROUTES.REQUESTS;
   };
 
   return (

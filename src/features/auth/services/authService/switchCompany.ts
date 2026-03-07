@@ -1,6 +1,4 @@
-import { axiosInstance } from "@/shared/services/axiosInstance";
-import type { SwitchCompanyResponse } from "./types";
-
+// Mock switch company - sin conexión al backend
 export const switchCompany = async (
   companyId: string,
 ): Promise<{
@@ -10,21 +8,39 @@ export const switchCompany = async (
   companies?: { id: string; name: string }[];
   defaultCompanyId?: string | null;
 }> => {
-  const { data } = await axiosInstance.post<SwitchCompanyResponse>(
-    "/auth/switch-company",
-    {},
-    {
-      headers: {
-        "x-company-id": companyId,
+  // Simular delay de red
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  // Crear tokens falsos con la nueva compañía
+  const fakeAccessToken = btoa(
+    JSON.stringify({
+      user: {
+        email: "demo@demo.com",
+        name: "Usuario Demo",
+        role: "admin",
+        id: "1",
+        companyId: companyId,
       },
-    },
+      exp: Date.now() + 3600000, // 1 hora
+    }),
+  );
+
+  const fakeRefreshToken = btoa(
+    JSON.stringify({
+      userId: "1",
+      companyId: companyId,
+      exp: Date.now() + 86400000, // 24 horas
+    }),
   );
 
   return {
-    accessToken: data.access_token,
-    refreshToken: data.refresh_token,
-    permissions: data.permissions,
-    companies: data.companies,
-    defaultCompanyId: data.defaultCompanyId,
+    accessToken: fakeAccessToken,
+    refreshToken: fakeRefreshToken,
+    permissions: ["*"],
+    companies: [
+      { id: "1", name: "Empresa Demo" },
+      { id: "2", name: "Empresa Secundaria" },
+    ],
+    defaultCompanyId: companyId,
   };
 };
